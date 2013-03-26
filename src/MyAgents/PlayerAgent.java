@@ -36,18 +36,20 @@ public class PlayerAgent extends Agent {
         catch(FIPAException fe){}
         
         this.addBehaviour(new WaitingOffer());
-        this.doDelete();
         
+    }
+    @Override
+    protected void takeDown(){
+        System.out.println("muere");
     }
     
     private class WaitingOffer extends CyclicBehaviour{
     @Override
     public void action(){
         ACLMessage msg = myAgent.receive();
-        if(msg != null){
-            if(msg.getContent().equals(("Offer"))){
-                System.out.println("eureca!");
-            }
+        if(msg != null && msg.getContent().equals(("Offer"))){
+            System.out.println("eureca!");
+            myAgent.doDelete();
         }else{
             block();
         }
