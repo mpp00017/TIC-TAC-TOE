@@ -36,11 +36,11 @@ public class PlayerAgent extends Agent {
         catch(FIPAException fe){}
         
         this.addBehaviour(new WaitingOffer());
-        
+        this.doDelete();
         
     }
     
-    private class WaitingOffer extends OneShotBehaviour{
+    private class WaitingOffer extends CyclicBehaviour{
     @Override
     public void action(){
         ACLMessage msg = myAgent.receive();
