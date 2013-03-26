@@ -14,6 +14,7 @@ import jade.core.Agent;
  */
 public class HelloWorldAgent extends Agent {
 
+  @Override
   protected void setup() {
   	System.out.println("Hello World! My name is "+getLocalName());
   	
