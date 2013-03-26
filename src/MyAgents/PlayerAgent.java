@@ -22,7 +22,7 @@ public class PlayerAgent extends Agent {
     @Override
     protected void setup(){
         
-        System.out.println("Agent: "+this.getLocalName()+" running.");
+        System.out.println("Player Agent: "+this.getLocalName()+" is running.");
         //Register the p service in the yellow pages
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
@@ -45,7 +45,9 @@ public class PlayerAgent extends Agent {
     public void action(){
         ACLMessage msg = myAgent.receive();
         if(msg != null){
-            String texto = msg.getContent();
+            if(msg.getContent().equals(("Offer"))){
+                System.out.println("eureca!");
+            }
         }else{
             block();
         }
