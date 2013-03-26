@@ -16,8 +16,12 @@ public class HelloWorldAgent extends Agent {
 
   @Override
   protected void setup() {
-  	System.out.println("Hola Manuel! Mi nombre es "+getLocalName());
+
+      //MANUEL
+  	System.out.println("Hola Mundo! Mi nombre es "+getLocalName());
+
   	// Esto peta fijo!
+
   	// Make this agent terminate
   	doDelete();
   } 
