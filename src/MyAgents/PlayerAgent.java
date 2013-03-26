@@ -23,7 +23,7 @@ public class PlayerAgent extends Agent {
     protected void setup(){
         
         System.out.println("Player Agent: "+this.getLocalName()+" is running.");
-        //Register the p service in the yellow pages
+        //Register the player service in the yellow pages
         DFAgentDescription dfd = new DFAgentDescription();
         dfd.setName(getAID());
         ServiceDescription sd = new ServiceDescription();

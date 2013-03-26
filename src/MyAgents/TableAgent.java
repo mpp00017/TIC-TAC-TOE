@@ -39,10 +39,6 @@ public class TableAgent extends Agent {
         }catch(FIPAException fe){}
         
         for(int i=0;i<playerAgents.length;i++){
-            System.out.println(playerAgents[i]);
-        }
-        
-        for(int i=0;i<playerAgents.length;i++){
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(playerAgents[i]);
             msg.setLanguage("English");
