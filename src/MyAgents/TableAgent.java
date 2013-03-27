@@ -65,8 +65,9 @@ public class TableAgent extends Agent {
         
         @Override
         public void action() {
-            System.out.println("Player 1: "+jugadores[0]);
-            System.out.println("Player 2: "+jugadores[1]);
+            System.out.println("Starting game...");
+            System.out.println("Player 1: "+jugadores[0].getLocalName());
+            System.out.println("Player 2: "+jugadores[1].getLocalName());
         }
 
         @Override
@@ -93,7 +94,6 @@ public class TableAgent extends Agent {
                 jugadores[1] = accepted.getSender();
                 vacantes--;
                 myAgent.addBehaviour(new StartGame(jugadores));
-                System.out.println("Lanzando partida...");
             }
         }
         
