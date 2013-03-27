@@ -71,7 +71,7 @@ public class TableAgent extends Agent {
 
         @Override
         public boolean done() {
-            throw new UnsupportedOperationException("Not supported yet.");
+            return true;
         }
         
     }
@@ -86,11 +86,14 @@ public class TableAgent extends Agent {
                 
         @Override
         protected void handleAcceptProposal(ACLMessage accepted) {
-            if(vacantes== 2){
+            if(vacantes == 2){
                 jugadores[0] = accepted.getSender();
+                vacantes--;
             }else if(vacantes == 1){
                 jugadores[1] = accepted.getSender();
+                vacantes--;
                 myAgent.addBehaviour(new StartGame(jugadores));
+                System.out.println("Lanzando partida...");
             }
         }
         
