@@ -5,19 +5,22 @@
 package MyAgents;
 
 import jade.core.Agent;
-import jade.core.behaviours.CyclicBehaviour;
-import jade.core.behaviours.OneShotBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
+import jade.proto.ProposeResponder;
 
 /**
  *
  * @author Manuel
  */
 public class PlayerAgent extends Agent {
+    
+    boolean playing = false;
     
     @Override
     protected void setup(){
@@ -35,27 +38,35 @@ public class PlayerAgent extends Agent {
         }
         catch(FIPAException fe){}
         
-        this.addBehaviour(new WaitingOffer());
+        //this.addBehaviour(new WaitingOffer());
+        
+        //Creamos la plantilla a emplear, para solo recibir mensajes con el protocolo FIPA_PROPOSE y la performativa PROPOSE
+        MessageTemplate template = ProposeResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_PROPOSE);
+ 
+        //Añadimos el comportamiento "responderSalirClase()"
+        this.addBehaviour(new ResponderOffer(this, template));
         
     }
-    @Override
-    protected void takeDown(){
-        System.out.println("muere");
-    }
     
-    private class WaitingOffer extends CyclicBehaviour{
-    @Override
-    public void action(){
-        ACLMessage msg = myAgent.receive();
-        if(msg != null && msg.getContent().equals(("Offer"))){
-            System.out.println("eureca!");
-            myAgent.doDelete();
-        }else{
-            block();
+    private class ResponderOffer extends ProposeResponder{
+
+        private ResponderOffer(Agent a, MessageTemplate template) {
+            super(a,template);
         }
+        
+        @Override
+        protected ACLMessage prepareResponse(ACLMessage proposal){
+            ACLMessage answer = proposal.createReply();
+            if(playing){
+                answer.setPerformative(ACLMessage.REJECT_PROPOSAL);
+            }else{
+                answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
+            }
+            return answer;
+        }
+        
     }
-}
-    
+       
 }
 
 

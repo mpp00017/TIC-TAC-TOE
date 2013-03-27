@@ -6,11 +6,14 @@ package MyAgents;
 
 import jade.core.AID;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
+import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.proto.ProposeInitiator;
 
 /**
  *
@@ -18,8 +21,13 @@ import jade.lang.acl.ACLMessage;
  */
 public class TableAgent extends Agent {
     AID playerAgents[];
+    AID jugadores[] = new AID[2];
+    
+    protected AID[] getJugadores(){return jugadores;}
+    
     @Override
     protected void setup(){
+        
         
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");
         
@@ -38,12 +46,53 @@ public class TableAgent extends Agent {
             }
         }catch(FIPAException fe){}
         
+        
+         ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE);
+         msg.setProtocol(FIPANames.InteractionProtocol.FIPA_PROPOSE);
+         msg.setLanguage("English");
+         msg.setContent("Would you like to play?");
+         
         for(int i=0;i<playerAgents.length;i++){
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(playerAgents[i]);
-            msg.setLanguage("English");
-            msg.setContent("Offer");
-            send(msg);
         }
+        
+        this.addBehaviour(new CreateGame(this,msg));
+    }
+    
+    private class StartGame extends Behaviour{
+        
+        StartGame(AID[] jugadores){};
+        
+        @Override
+        public void action() {
+            System.out.println("Player 1: "+jugadores[0]);
+            System.out.println("Player 2: "+jugadores[1]);
+        }
+
+        @Override
+        public boolean done() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
+    }
+    
+    private class CreateGame extends ProposeInitiator{
+        
+        private int vacantes = 2;
+        
+        CreateGame(Agent a, ACLMessage message){
+            super(a,message);
+        }
+                
+        @Override
+        protected void handleAcceptProposal(ACLMessage accepted) {
+            if(vacantes== 2){
+                jugadores[0] = accepted.getSender();
+            }else if(vacantes == 1){
+                jugadores[1] = accepted.getSender();
+                myAgent.addBehaviour(new StartGame(jugadores));
+            }
+        }
+        
     }
 }
