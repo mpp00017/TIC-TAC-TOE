@@ -7,6 +7,7 @@ package MyAgents;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import static jade.core.behaviours.Behaviour.STATE_READY;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -70,6 +71,7 @@ public class TableAgent extends Agent {
             System.out.println("Starting game...");
             System.out.println("Player 1: "+jugadores[0].getLocalName());
             System.out.println("Player 2: "+jugadores[1].getLocalName());
+            myGUI.setTextPlayers(jugadores[0].getLocalName(), jugadores[1].getLocalName());
         }
 
         @Override
