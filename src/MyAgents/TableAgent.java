@@ -22,12 +22,14 @@ import jade.proto.ProposeInitiator;
 public class TableAgent extends Agent {
     AID playerAgents[];
     AID jugadores[] = new AID[2];
-    
+    prueba myGUI;
     protected AID[] getJugadores(){return jugadores;}
     
     @Override
     protected void setup(){
         
+        myGUI = new prueba();
+        myGUI.setVisible(true);
         
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");
         
