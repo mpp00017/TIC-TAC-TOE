@@ -23,14 +23,18 @@ public class TableAgent extends Agent {
     AID playerAgents[];
     AID jugadores[] = new AID[2];
     
+    TicTacToeFrame tableGUI;
+    
     protected AID[] getJugadores(){return jugadores;}
     
     @Override
     protected void setup(){
         
-        
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");
         
+        tableGUI = new TicTacToeFrame(this);
+        tableGUI.setTitle("TIC-TAC-TOE - MULTIAGENTES");
+        tableGUI.setVisible(true);
         
         //Search Player Agents
         DFAgentDescription template = new DFAgentDescription();
@@ -65,9 +69,10 @@ public class TableAgent extends Agent {
         
         @Override
         public void action() {
+            
             System.out.println("Starting game...");
             System.out.println("Player 1: "+jugadores[0].getLocalName());
-            System.out.println("Player 2: "+jugadores[1].getLocalName());
+            System.out.println("Player 2: "+jugadores[1].getLocalName());        
         }
 
         @Override
