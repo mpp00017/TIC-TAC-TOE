@@ -31,15 +31,15 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
+        jPanel1 = new JPanelConFondo();
+        jPanel2 = new JPanelConFondo();
+        jPanel3 = new JPanelConFondo();
+        jPanel4 = new JPanelConFondo();
+        jPanel5 = new JPanelConFondo();
+        jPanel6 = new JPanelConFondo();
+        jPanel7 = new JPanelConFondo();
+        jPanel8 = new JPanelConFondo();
+        jPanel9 = new JPanelConFondo();
         jLabelPlayer1 = new javax.swing.JLabel();
         jLabelPlayer2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
