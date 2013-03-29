@@ -22,13 +22,13 @@ import jade.proto.ProposeInitiator;
 public class TableAgent extends Agent {
     AID playerAgents[];
     AID jugadores[] = new AID[2];
-    prueba myGUI;
+    TicTacToeFrame myGUI;
     protected AID[] getJugadores(){return jugadores;}
     
     @Override
     protected void setup(){
         
-        myGUI = new prueba();
+        myGUI = new TicTacToeFrame();
         myGUI.setVisible(true);
         
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");
@@ -70,6 +70,7 @@ public class TableAgent extends Agent {
             System.out.println("Starting game...");
             System.out.println("Player 1: "+jugadores[0].getLocalName());
             System.out.println("Player 2: "+jugadores[1].getLocalName());
+            myGUI.setTextPlayers(jugadores[0].getLocalName(), jugadores[1].getLocalName());
         }
 
         @Override
