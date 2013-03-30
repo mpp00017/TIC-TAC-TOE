@@ -19,7 +19,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     public TicTacToeFrame() {
         initComponents();
         setImages();
-        jTextArea1.setOpaque(false);
     }
 
     TicTacToeFrame(TableAgent aThis) {
