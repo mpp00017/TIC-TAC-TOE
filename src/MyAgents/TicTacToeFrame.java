@@ -4,6 +4,9 @@
  */
 package MyAgents;
 
+import java.awt.Color;
+import javax.swing.BorderFactory;
+
 /**
  *
  * @author juan
@@ -16,6 +19,7 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     public TicTacToeFrame() {
         initComponents();
         setImages();
+        jTextArea1.setOpaque(false);
     }
 
     TicTacToeFrame(TableAgent aThis) {
@@ -170,7 +174,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        panelIcon.setBorder(null);
         panelIcon.setOpaque(false);
 
         javax.swing.GroupLayout panelIconLayout = new javax.swing.GroupLayout(panelIcon);
@@ -184,7 +187,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        panelHeader.setBorder(null);
         panelHeader.setOpaque(false);
 
         javax.swing.GroupLayout panelHeaderLayout = new javax.swing.GroupLayout(panelHeader);
@@ -251,7 +253,8 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
                     .addComponent(Panel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Panel33, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(PanelFondoLayout.createSequentialGroup()
                 .addGap(124, 124, 124)
                 .addComponent(jLabelPlayer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -260,15 +263,17 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabelPlayer2, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(124, 124, 124))
-            .addGroup(PanelFondoLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelFondoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94))
         );
         PanelFondoLayout.setVerticalGroup(
             PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelFondoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(panelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(panelIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelPlayer1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -348,12 +353,12 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         ((JPanelConFondo) PanelFondo).setImagen("Images/fondo.png");
         ((JPanelConFondo) panelIcon).setImagen("Images/icono.png");
         ((JPanelConFondo) panelHeader).setImagen("Images/header.png");
-        /*
+        
         ((JPanelConFondo) Panel11).setImagen("Images/cross.png");
         ((JPanelConFondo) Panel22).setImagen("Images/cross.png");
         ((JPanelConFondo) Panel33).setImagen("Images/cross.png");
         ((JPanelConFondo) Panel31).setImagen("Images/circle.png");
-        ((JPanelConFondo) Panel32).setImagen("Images/circle.png");*/     
+        ((JPanelConFondo) Panel32).setImagen("Images/circle.png");    
     }
     
     public void setTextPlayers(String player1, String player2){   
