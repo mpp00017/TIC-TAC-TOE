@@ -398,8 +398,8 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     }
     
     public void setTextPlayers(String player1, String player2){   
-        jLabelPlayer1.setText("1: " + player1);
-        jLabelPlayer2.setText("2: " + player2);
+        jLabelPlayer1.setText(player1);
+        jLabelPlayer2.setText(player2);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
