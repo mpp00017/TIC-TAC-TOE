@@ -369,14 +369,14 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
-            /*public void run() {
-                new TicTacToeFrame().setVisible(true);
-            }*/
             public void run() {
+                new TicTacToeFrame().setVisible(true);
+            }
+            /*public void run() {
                 TicTacToeFrame tablero = new TicTacToeFrame();
                 tablero.setLocationRelativeTo(null);
                 tablero.setVisible(true);
-            }
+            }*/
         });
     }
     
