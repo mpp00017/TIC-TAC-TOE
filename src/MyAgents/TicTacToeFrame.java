@@ -4,6 +4,9 @@
  */
 package MyAgents;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  *
  * @author juan
@@ -18,9 +21,16 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         setImages();
     }
 
-    TicTacToeFrame(TableAgent aThis) {
+    TicTacToeFrame(final TableAgent aThis) {
         initComponents();
-        setImages();    
+        setImages();
+        
+        addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowClosing(WindowEvent e) {
+                aThis.doDelete();
+            }
+        });
     }
 
     /**
