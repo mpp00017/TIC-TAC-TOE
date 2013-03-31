@@ -372,11 +372,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             public void run() {
                 new TicTacToeFrame().setVisible(true);
             }
-            /*public void run() {
-                TicTacToeFrame tablero = new TicTacToeFrame();
-                tablero.setLocationRelativeTo(null);
-                tablero.setVisible(true);
-            }*/
         });
     }
     
