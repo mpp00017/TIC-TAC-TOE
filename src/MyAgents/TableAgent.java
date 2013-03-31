@@ -28,7 +28,7 @@ public class TableAgent extends Agent {
     @Override
     protected void setup(){
         
-        myGUI = new TicTacToeFrame();
+        myGUI = new TicTacToeFrame(this);
         myGUI.setVisible(true);
         
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");

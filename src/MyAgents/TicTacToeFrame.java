@@ -19,7 +19,8 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     }
 
     TicTacToeFrame(TableAgent aThis) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
+        setImages();    
     }
 
     /**
