@@ -428,17 +428,71 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         ((JPanelConFondo) panelHeader).setImagen("Images/header.png");
         ((JPanelConFondo) player1Icon).setImagen("Images/cross.png");
         ((JPanelConFondo) player2Icon).setImagen("Images/circle.png");
-        
-        ((JPanelConFondo) Panel11).setImagen("Images/cross.png");
-        ((JPanelConFondo) Panel22).setImagen("Images/cross.png");
-        ((JPanelConFondo) Panel33).setImagen("Images/cross.png");
-        ((JPanelConFondo) Panel31).setImagen("Images/circle.png");
-        ((JPanelConFondo) Panel32).setImagen("Images/circle.png");    
     }
     
     public void setTextPlayers(String player1, String player2){   
         jLabelPlayer1.setText(player1);
         jLabelPlayer2.setText(player2);
+    }
+    
+    public void setMovement(String mov, int player){
+        switch (mov) {
+            case "1":
+                if(player==1)
+                    ((JPanelConFondo) Panel11).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel11).setImagen("Images/circle.png");
+                break;
+            case "2":
+                if(player==1)
+                    ((JPanelConFondo) Panel12).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel12).setImagen("Images/circle.png");
+                break;
+            case "3":
+                if(player==1)
+                    ((JPanelConFondo) Panel13).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel13).setImagen("Images/circle.png");
+                break;
+            case "4":
+                if(player==1)
+                    ((JPanelConFondo) Panel21).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel21).setImagen("Images/circle.png");
+                break;
+            case "5":
+                if(player==1)
+                    ((JPanelConFondo) Panel22).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel22).setImagen("Images/circle.png");
+                break;
+            case "6":
+                if(player==1)
+                    ((JPanelConFondo) Panel23).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel23).setImagen("Images/circle.png");
+                break;  
+            case "7":
+                if(player==1)
+                    ((JPanelConFondo) Panel31).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel31).setImagen("Images/circle.png");
+                break;       
+            case "8":
+                if(player==1)
+                    ((JPanelConFondo) Panel32).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel32).setImagen("Images/circle.png");
+                break;
+            case "9":
+                if(player==1)
+                    ((JPanelConFondo) Panel33).setImagen("Images/cross.png");
+                else
+                    ((JPanelConFondo) Panel33).setImagen("Images/circle.png");
+                break;
+        }   
+        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
