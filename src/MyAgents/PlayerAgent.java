@@ -81,15 +81,13 @@ public class PlayerAgent extends Agent {
             ACLMessage msg = myAgent.receive();
             if(msg != null){
                 if(!"".equals(msg.getContent())){
-                    int mov = Integer.getInteger(movement);
+                    mov = Integer.getInteger(msg.getContent());
                     int fila = (mov/3)-1;
                     int columna = 9-(fila*3)-1;
                     table[fila][columna] = 2;
                 }
-            }else{
-                block();
-            }
-            boolean encontrado = false;
+                
+                boolean encontrado = false;
             for(int i=0;i<3;i++){
                 for(int j=0;j<3;j++){
                     if(!encontrado){
@@ -103,10 +101,14 @@ public class PlayerAgent extends Agent {
             }
             //finish = partidaTerminada();.....
             ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
-            msg.setLanguage("English");
-            msg.setContent(String.valueOf(mov));
-            msg.addReceiver(msg.getSender());
+            msgToTable.setLanguage("English");
+            msgToTable.setContent(String.valueOf(mov));
+            msgToTable.addReceiver(msg.getSender());
             send(msg);
+
+            }else{
+                block();
+            }
             
         }
 

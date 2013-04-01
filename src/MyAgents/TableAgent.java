@@ -81,6 +81,11 @@ public class TableAgent extends Agent {
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     player = player+1 %2;
+                    if(player == 1){
+                        player = 0;
+                    }else{
+                        player = 1;
+                    }
                 }else if(msg.getContent().length() == 3){
                     //ha ganado
                     finish = true;
