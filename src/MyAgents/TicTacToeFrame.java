@@ -518,4 +518,63 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel player2Icon;
     private javax.swing.JLabel popPupLabel;
     // End of variables declaration//GEN-END:variables
+
+    void setMovementV(String mov, int player) {
+        switch (mov) {
+            case "1":
+                if(player==0)
+                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCircle.png");
+                break;
+            case "2":
+                if(player==0)
+                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCircle.png");
+                break;
+            case "3":
+                if(player==0)
+                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCircle.png");
+                break;
+            case "4":
+                if(player==0)
+                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCircle.png");
+                break;
+            case "5":
+                if(player==0)
+                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCircle.png");
+                break;
+            case "6":
+                if(player==0)
+                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCircle.png");
+                break;  
+            case "7":
+                if(player==0)
+                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCircle.png");
+                break;       
+            case "8":
+                if(player==0)
+                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCircle.png");
+                break;
+            case "9":
+                if(player==0)
+                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCircle.png");
+                break;
+        }   
+    }
 }

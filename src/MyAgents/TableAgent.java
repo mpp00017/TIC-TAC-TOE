@@ -7,7 +7,6 @@ package MyAgents;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
-import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -93,19 +92,24 @@ public class TableAgent extends Agent {
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     myGUI.setMovement(lastMov, player);
-                    if(player==0)
+                    if(player==0) {
                         myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    else
+                    }
+                    else {
                         myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                    }
                     movimientos++;
                     
-                    if(movimientos==9)
-                        myGUI.popPupMessage("EMPATE");
+                    if(movimientos==9) {
+                        myGUI.popPupMessage("DRAW");
+                    }
                     
-                    if(player==1)
+                    if(player==1) {
                         player=0;
-                    else
+                    }
+                    else {
                         player=1;
+                    }
                     
                 }else if(msg.getContent().length() == 4){
                     //ha ganado
@@ -115,18 +119,23 @@ public class TableAgent extends Agent {
                     lastMov=lastMov+lastMovChar[0];
                     
                     myGUI.setMovement(lastMov, player);
-                    if(player==0)
+                    if(player==0) {
                         myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    else
+                    }
+                    else {
                         myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                    }
                     movimientos++;
-                    
-                    myGUI.popPupMessage("GANADOR " + msg.getSender().getLocalName());
+                    myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
+                    myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
+                    myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
+                    myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
                     finish = true;
                 }
                 
-            }else
+            }else {
                 block();
+            }
         }
 
         @Override
