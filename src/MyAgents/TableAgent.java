@@ -78,9 +78,10 @@ public class TableAgent extends Agent {
             
             msg = myAgent.receive();
             if(msg != null){
-                System.out.println(msg.getContent()+" "+msg.getSender());
+                System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
+                    myGUI.setMovement(lastMov, player);
                     if(player==1){
                         player=0;
                     }else{

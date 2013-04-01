@@ -81,31 +81,56 @@ public class PlayerAgent extends Agent {
             ACLMessage msg = myAgent.receive();
             if(msg != null){
                 if(!"".equals(msg.getContent())){
-                    mov = Integer.getInteger(msg.getContent());
-                    int fila = (mov/3)-1;
-                    int columna = 9-(fila*3)-1;
-                    table[fila][columna] = 2;
-                }
-                
-                boolean encontrado = false;
-            for(int i=0;i<3;i++){
-                for(int j=0;j<3;j++){
-                    if(!encontrado){
-                        if(table[i][j] == 0){
-                            encontrado = true;
-                            table[i][j] = 1;
-                            mov = i*3+j+1;
-                        }
+                    movement = msg.getContent();
+                    switch(movement){
+                        case "1":
+                            table[0][0]=2;
+                            break;
+                        case "2":
+                            table[0][1]=2;
+                            break;
+                        case "3":
+                            table[0][2]=2;
+                            break;
+                        case "4":
+                            table[1][0]=2;
+                            break;
+                        case "5":
+                            table[1][1]=2;
+                            break;
+                        case "6":
+                            table[1][2]=2;
+                            break;
+                        case "7":
+                            table[2][0]=2;
+                            break;
+                        case "8":
+                            table[2][1]=2;
+                            break;
+                        case "9":
+                            table[2][2]=2;
+                            break;
                     }
                 }
-            }
-            //finish = partidaTerminada();.....
-            ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
-            msgToTable.setLanguage("English");
-            msgToTable.setContent(String.valueOf(mov));
-            msgToTable.addReceiver(msg.getSender());
-            send(msgToTable);
-            //System.out.println(myAgent.getLocalName()+" : "+mov);
+            
+                mov=0;
+                boolean encontrado = false;
+                for(int i=0;i<3;i++)
+                    for(int j=0;j<3;j++)
+                        if(!encontrado){
+                            mov++;
+                            if(table[i][j] == 0){
+                                encontrado = true;
+                                table[i][j] = 1;
+                            }
+                        }
+                //finish = partidaTerminada();.....
+                ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
+                msgToTable.setLanguage("English");
+                msgToTable.setContent(String.valueOf(mov));
+                msgToTable.addReceiver(msg.getSender());
+                send(msgToTable);
+                //System.out.println(myAgent.getLocalName()+" : "+mov);
 
             }else{
                 block();
