@@ -105,7 +105,7 @@ public class PlayerAgent extends Agent {
             msgToTable.setContent(String.valueOf(mov));
             msgToTable.addReceiver(msg.getSender());
             send(msgToTable);
-            System.out.println(myAgent.getLocalName()+" : "+mov);
+            //System.out.println(myAgent.getLocalName()+" : "+mov);
 
             }else{
                 block();

@@ -64,7 +64,7 @@ public class TableAgent extends Agent {
     private class StartGame extends Behaviour{
         boolean finish = false;
         String lastMov = "";
-        int player = 1;
+        int player = 0;
         StartGame(AID[] jugadores){};
         
         @Override
@@ -78,6 +78,7 @@ public class TableAgent extends Agent {
             
             msg = myAgent.receive();
             if(msg != null){
+                System.out.println(msg.getContent()+" "+msg.getSender());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     if(player==1){
