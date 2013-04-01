@@ -62,20 +62,37 @@ public class TableAgent extends Agent {
     }
     
     private class StartGame extends Behaviour{
-        
+        boolean finish = false;
+        String lastMov = "";
+        int player = 1;
         StartGame(AID[] jugadores){};
         
         @Override
         public void action() {
-            System.out.println("Starting game...");
-            System.out.println("Player 1: "+jugadores[0].getLocalName());
-            System.out.println("Player 2: "+jugadores[1].getLocalName());
             myGUI.setTextPlayers(jugadores[0].getLocalName(), jugadores[1].getLocalName());
+            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            msg.setLanguage("English");
+            msg.setContent(lastMov);
+            msg.addReceiver(jugadores[player]);
+            send(msg);
+            
+            msg = myAgent.receive();
+            if(msg != null){
+                if(msg.getContent().length() == 1){
+                    lastMov = msg.getContent();
+                    player = player+1 %2;
+                }else if(msg.getContent().length() == 3){
+                    //ha ganado
+                    finish = true;
+                }
+            }else{
+                block();
+            }
         }
 
         @Override
         public boolean done() {
-            return true;
+            return finish;
         }
         
     }
