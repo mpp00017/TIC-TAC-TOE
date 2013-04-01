@@ -7,6 +7,7 @@ package MyAgents;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -14,6 +15,8 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.proto.ProposeInitiator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -78,12 +81,22 @@ public class TableAgent extends Agent {
             msg.addReceiver(jugadores[player]);
             send(msg);
             
+            try {
+                Thread.sleep (1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             msg = myAgent.receive();
             if(msg != null){
                 System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     myGUI.setMovement(lastMov, player);
+                    if(player==0)
+                        myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                    else
+                        myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
                     movimientos++;
                     if(player==1)
                         player=0;
