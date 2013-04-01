@@ -104,7 +104,7 @@ public class PlayerAgent extends Agent {
             msgToTable.setLanguage("English");
             msgToTable.setContent(String.valueOf(mov));
             msgToTable.addReceiver(msg.getSender());
-            send(msg);
+            send(msgToTable);
             System.out.println(myAgent.getLocalName()+" : "+mov);
 
             }else{
