@@ -5,6 +5,7 @@
 package MyAgents;
 
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -61,12 +62,60 @@ public class PlayerAgent extends Agent {
                 answer.setPerformative(ACLMessage.REJECT_PROPOSAL);
             }else{
                 answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
+                playing = true;
+                myAgent.addBehaviour(new sendMovement());
             }
             return answer;
         }
         
     }
        
+    private class sendMovement extends Behaviour{
+        boolean finish = false;
+        int table[][] = new int[3][3];
+        String movement;
+        int mov;
+
+        @Override
+        public void action() {
+            ACLMessage msg = myAgent.receive();
+            if(msg != null){
+                if(!"".equals(msg.getContent())){
+                    int mov = Integer.getInteger(movement);
+                    int fila = (mov/3)-1;
+                    int columna = 9-(fila*3)-1;
+                    table[fila][columna] = 2;
+                }
+            }else{
+                block();
+            }
+            boolean encontrado = false;
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    if(!encontrado){
+                        if(table[i][j] == 0){
+                            encontrado = true;
+                            table[i][j] = 1;
+                            mov = i*3+j+1;
+                        }
+                    }
+                }
+            }
+            //finish = partidaTerminada();.....
+            ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
+            msg.setLanguage("English");
+            msg.setContent(String.valueOf(mov));
+            msg.addReceiver(msg.getSender());
+            send(msg);
+            
+        }
+
+        @Override
+        public boolean done() {
+            return finish;
+        }
+        
+    }
 }
 
 
