@@ -80,6 +80,7 @@ public class TableAgent extends Agent {
             if(msg != null){
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
+                    myGUI.setMovement(lastMov, player);
                     player = player+1 %2;
                 }else if(msg.getContent().length() == 3){
                     //ha ganado
