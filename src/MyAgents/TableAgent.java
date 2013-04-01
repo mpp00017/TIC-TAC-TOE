@@ -98,14 +98,20 @@ public class TableAgent extends Agent {
                     else
                         myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
                     movimientos++;
+                    
+                    if(movimientos==9)
+                        myGUI.popPupMessage("EMPATE");
+                    
                     if(player==1)
                         player=0;
                     else
                         player=1;
                     
-                }else if(msg.getContent().length() == 3)
+                }else if(msg.getContent().length() == 3){
                     //ha ganado
+                    myGUI.popPupMessage("GANADOR " + msg.getSender().getLocalName());
                     finish = true;
+                }
                 
             }else
                 block();

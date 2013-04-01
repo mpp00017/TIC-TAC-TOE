@@ -43,8 +43,7 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jFrame1 = new javax.swing.JFrame();
-        jFrame2 = new javax.swing.JFrame();
-        jFrame3 = new javax.swing.JFrame();
+        popPupLabel = new javax.swing.JLabel();
         PanelFondo = new JPanelConFondo();
         Panel31 = new JPanelConFondo();
         Panel33 = new JPanelConFondo();
@@ -66,37 +65,23 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         player1Icon = new JPanelConFondo();
         player2Icon = new JPanelConFondo();
 
+        jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jFrame1.setMinimumSize(new java.awt.Dimension(400, 130));
+        jFrame1.setPreferredSize(new java.awt.Dimension(400, 130));
+        jFrame1.setResizable(false);
+
+        popPupLabel.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
+        popPupLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
         jFrame1Layout.setHorizontalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(popPupLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         jFrame1Layout.setVerticalGroup(
             jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jFrame2Layout = new javax.swing.GroupLayout(jFrame2.getContentPane());
-        jFrame2.getContentPane().setLayout(jFrame2Layout);
-        jFrame2Layout.setHorizontalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame2Layout.setVerticalGroup(
-            jFrame2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jFrame3Layout = new javax.swing.GroupLayout(jFrame3.getContentPane());
-        jFrame3.getContentPane().setLayout(jFrame3Layout);
-        jFrame3Layout.setHorizontalGroup(
-            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        jFrame3Layout.setVerticalGroup(
-            jFrame3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(popPupLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -503,6 +488,12 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         jTextArea2.setText(jTextArea2.getText()+ name + ": " + text + "\n");
     }
     
+    public void popPupMessage(String txt){
+        popPupLabel.setText(txt);
+        
+        jFrame1.setVisible(true);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel11;
     private javax.swing.JPanel Panel12;
@@ -515,8 +506,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel Panel33;
     private javax.swing.JPanel PanelFondo;
     private javax.swing.JFrame jFrame1;
-    private javax.swing.JFrame jFrame2;
-    private javax.swing.JFrame jFrame3;
     private javax.swing.JLabel jLabelPlayer1;
     private javax.swing.JLabel jLabelPlayer2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -527,5 +516,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private javax.swing.JPanel panelIcon;
     private javax.swing.JPanel player1Icon;
     private javax.swing.JPanel player2Icon;
+    private javax.swing.JLabel popPupLabel;
     // End of variables declaration//GEN-END:variables
 }
