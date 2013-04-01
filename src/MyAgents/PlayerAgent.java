@@ -113,17 +113,7 @@ public class PlayerAgent extends Agent {
                     }
                 }
             
-                mov=0;
-                boolean encontrado = false;
-                for(int i=0;i<3;i++)
-                    for(int j=0;j<3;j++)
-                        if(!encontrado){
-                            mov++;
-                            if(table[i][j] == 0){
-                                encontrado = true;
-                                table[i][j] = 1;
-                            }
-                        }
+                mov = generateMov();
                 //finish = partidaTerminada();.....
                 ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
                 msgToTable.setLanguage("English");
@@ -141,6 +131,62 @@ public class PlayerAgent extends Agent {
         @Override
         public boolean done() {
             return finish;
+        }
+
+        private int generateMov() {
+            boolean found = false;
+            int move;
+            do{
+                move=((int) Math.random() * 9);
+                switch(move){
+                        case 1:
+                            if(table[0][0]==0){
+                                found = true;
+                            }
+                            break;
+                        case 2:
+                            if(table[0][1]==0){
+                                found = true;
+                            }
+                            break;
+                        case 3:
+                            if(table[0][2]==0){
+                                found = true;
+                            }
+                            break;
+                        case 4:
+                            if(table[1][0]==0){
+                                found = true;
+                            }
+                            break;
+                        case 5:
+                            if(table[1][1]==0){
+                                found = true;
+                            }
+                            break;
+                        case 6:
+                            if(table[1][2]==0){
+                                found = true;
+                            }
+                            break;
+                        case 7:
+                            if(table[2][0]==0){
+                                found = true;
+                            }
+                            break;
+                        case 8:
+                            if(table[2][1]==0){
+                                found = true;
+                            }
+                            break;
+                        case 9:
+                            if(table[2][2]==0){
+                                found = true;
+                            }
+                            break;
+                    }
+            }while(!found);
+            return move;
         }
         
     }
