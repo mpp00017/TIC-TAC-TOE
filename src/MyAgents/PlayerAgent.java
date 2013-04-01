@@ -137,50 +137,59 @@ public class PlayerAgent extends Agent {
             boolean found = false;
             int move;
             do{
-                move=((int) Math.random() * 9);
+                move=(int) (Math.random() * 9)+1;
                 switch(move){
                         case 1:
                             if(table[0][0]==0){
+                                table[0][0]=1;
                                 found = true;
                             }
                             break;
                         case 2:
                             if(table[0][1]==0){
+                                table[0][1]=1;
                                 found = true;
                             }
                             break;
                         case 3:
                             if(table[0][2]==0){
+                                table[0][2]=1;
                                 found = true;
                             }
                             break;
                         case 4:
                             if(table[1][0]==0){
+                                table[1][0]=1;
                                 found = true;
                             }
                             break;
                         case 5:
                             if(table[1][1]==0){
+                                table[1][1]=1;
                                 found = true;
                             }
                             break;
                         case 6:
                             if(table[1][2]==0){
+                                table[1][2]=1;
                                 found = true;
                             }
                             break;
                         case 7:
                             if(table[2][0]==0){
+                                table[2][0]=1;
                                 found = true;
                             }
                             break;
                         case 8:
                             if(table[2][1]==0){
+                                table[2][1]=1;
                                 found = true;
                             }
                             break;
                         case 9:
                             if(table[2][2]==0){
+                                table[2][2]=1;
                                 found = true;
                             }
                             break;
