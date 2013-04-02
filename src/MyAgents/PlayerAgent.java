@@ -142,7 +142,7 @@ public class PlayerAgent extends Agent {
                         }
                     }else if(table[1][0]==1){
                         if(table[1][2]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "467");
+                            msgToTable.setContent(String.valueOf(mov) + "456");
                         }
                     }
                 }else if (table[2][2]==1){
