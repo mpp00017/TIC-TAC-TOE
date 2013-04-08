@@ -519,22 +519,18 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel popPupLabel;
     // End of variables declaration//GEN-END:variables
 
-    void setMovementV(String mov, int player) throws InterruptedException {
+    void setMovementV(String mov, int player){
         switch (mov) {
             case "1":
-                if(player==0){
+                if(player==0)
                     ((JPanelConFondo) Panel11).setImagen("Images/VictoryCross.png");
-                    Thread.sleep(300);                    
-                    ((JPanelConFondo) Panel11).setImagen("Images/Cross.png");
-                }else
+                else
                     ((JPanelConFondo) Panel11).setImagen("Images/VictoryCircle.png");
                 break;
             case "2":
-                if(player==0){
+                if(player==0)
                     ((JPanelConFondo) Panel12).setImagen("Images/VictoryCross.png");
-                    Thread.sleep(300);                    
-                    ((JPanelConFondo) Panel12).setImagen("Images/Cross.png");
-                }else
+                else
                     ((JPanelConFondo) Panel12).setImagen("Images/VictoryCircle.png");
                 break;
             case "3":
