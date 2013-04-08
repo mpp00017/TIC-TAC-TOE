@@ -80,6 +80,7 @@ public class TableAgent extends Agent {
             msg.addReceiver(jugadores[player]);
             send(msg);
             
+            
             try {
                 Thread.sleep (1000);
             } catch (InterruptedException ex) {
@@ -112,25 +113,29 @@ public class TableAgent extends Agent {
                     }
                     
                 }else if(msg.getContent().length() == 4){
-                    //ha ganado
-                    char[] lastMovChar;
-                    lastMovChar=msg.getContent().toCharArray();
-                    lastMov="";
-                    lastMov=lastMov+lastMovChar[0];
-                    
-                    myGUI.setMovement(lastMov, player);
-                    if(player==0) {
-                        myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                    try {
+                        //ha ganado
+                        char[] lastMovChar;
+                        lastMovChar=msg.getContent().toCharArray();
+                        lastMov="";
+                        lastMov=lastMov+lastMovChar[0];
+                        
+                        myGUI.setMovement(lastMov, player);
+                        if(player==0) {
+                            myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                        }
+                        else {
+                            myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                        }
+                        movimientos++;
+                        myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
+                        myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
+                        myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
+                        myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
+                        finish = true;
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    else {
-                        myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                    }
-                    movimientos++;
-                    myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
-                    myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
-                    myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
-                    myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
-                    finish = true;
                 }
                 
             }else {
