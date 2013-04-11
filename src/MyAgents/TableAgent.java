@@ -13,6 +13,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.proto.AchieveREInitiator;
 import jade.proto.ProposeInitiator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,10 @@ public class TableAgent extends Agent {
     AID playerAgents[];
     AID jugadores[] = new AID[2];
     TicTacToeFrame myGUI;
-    protected AID[] getJugadores(){return jugadores;}
+    boolean finish = false;
+    String lastMov = "";
+    int player = 0;
+    int movimientos=0;
     
     @Override
     protected void setup(){
@@ -64,12 +68,9 @@ public class TableAgent extends Agent {
     }
     
     private class StartGame extends Behaviour{
-        boolean finish = false;
-        String lastMov = "";
-        int player = 0;
-        StartGame(AID[] jugadores){};
-                    int movimientos=0;
-
+        
+        
+    StartGame(AID[] jugadores){};
         
         @Override
         public void action() {
@@ -113,7 +114,6 @@ public class TableAgent extends Agent {
                     }
                     
                 }else if(msg.getContent().length() == 4){
-                    try {
                         //ha ganado
                         char[] lastMovChar;
                         lastMovChar=msg.getContent().toCharArray();
@@ -133,9 +133,6 @@ public class TableAgent extends Agent {
                         myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
                         myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
                         finish = true;
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
-                    }
                 }
                 
             }else {
@@ -170,5 +167,88 @@ public class TableAgent extends Agent {
             }
         }
         
+    }
+ class MoveRequest extends AchieveREInitiator{
+     
+     MoveRequest(Agent a, ACLMessage msg){
+         super(a,msg);
+     }
+     
+     @Override
+     protected void handleRefuse(ACLMessage agree)
+       {
+           finish = true;
+           myGUI.popPupMessage(jugadores[(player+1)%2]+" surrenders!");
+       }
+        
+     @Override
+     protected void handleAllResponses(java.util.Vector responses){
+         
+         if(responses.isEmpty()){
+            finish = true;
+            myGUI.popPupMessage(jugadores[(player+1)%2]+" wins!");
+         }
+         
+     }
+     
+     @Override
+     protected void handleInform(ACLMessage msg){
+         
+         System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
+                if(msg.getContent().length() == 1){
+                    lastMov = msg.getContent();
+                    myGUI.setMovement(lastMov, player);
+                    if(player==0) {
+                        myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                    }
+                    else {
+                        myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                    }
+                    movimientos++;
+                    
+                    if(movimientos==9) {
+                        finish = true;
+                        myGUI.popPupMessage("DRAW");
+                    }
+                    
+                    if(player==1) {
+                        player=0;
+                    }
+                    else {
+                        player=1;
+                    }
+                    
+                }else if(msg.getContent().length() == 4){
+                        //ha ganado
+                        char[] lastMovChar;
+                        lastMovChar=msg.getContent().toCharArray();
+                        lastMov="";
+                        lastMov=lastMov+lastMovChar[0];
+                        
+                        myGUI.setMovement(lastMov, player);
+                        if(player==0) {
+                            myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                        }
+                        else {
+                            myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                        }
+                        movimientos++;
+                        myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
+                        myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
+                        myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
+                        myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
+                        finish = true;
+                }
+                
+                if(finish == false){
+                    msg = new ACLMessage(ACLMessage.REQUEST);
+                    msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                    msg.setLanguage("English");
+                    msg.setContent(lastMov);
+                    msg.addReceiver(jugadores[(player+1)%2]);
+                }
+         
+     }
+     
     }
 }
