@@ -67,7 +67,7 @@ public class TableAgent extends Agent {
         this.addBehaviour(new CreateGame(this,msg));
     }
     
-    private class StartGame extends Behaviour{
+    /*private class StartGame extends Behaviour{
         
         
     StartGame(AID[] jugadores){};
@@ -145,7 +145,7 @@ public class TableAgent extends Agent {
             return finish || movimientos==9;
         }
         
-    }
+    }*/
     
     private class CreateGame extends ProposeInitiator{
         
@@ -163,7 +163,14 @@ public class TableAgent extends Agent {
             }else if(vacantes == 1){
                 jugadores[1] = accepted.getSender();
                 vacantes--;
-                myAgent.addBehaviour(new StartGame(jugadores));
+                myGUI.setTextPlayers(jugadores[0].getLocalName(), jugadores[1].getLocalName());
+                ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+                msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                msg.setLanguage("English");
+                msg.setContent(lastMov);
+                msg.addReceiver(jugadores[player]);
+                player = (player+1)%2;
+                myAgent.addBehaviour(new MoveRequest(myAgent, msg));
             }
         }
         
@@ -219,25 +226,29 @@ public class TableAgent extends Agent {
                     }
                     
                 }else if(msg.getContent().length() == 4){
-                        //ha ganado
-                        char[] lastMovChar;
-                        lastMovChar=msg.getContent().toCharArray();
-                        lastMov="";
-                        lastMov=lastMov+lastMovChar[0];
-                        
-                        myGUI.setMovement(lastMov, player);
-                        if(player==0) {
-                            myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                        }
-                        else {
-                            myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                        }
-                        movimientos++;
-                        myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
-                        myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
-                        myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
-                        myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
-                        finish = true;
+             try {
+                 //ha ganado
+                 char[] lastMovChar;
+                 lastMovChar=msg.getContent().toCharArray();
+                 lastMov="";
+                 lastMov=lastMov+lastMovChar[0];
+                 
+                 myGUI.setMovement(lastMov, player);
+                 if(player==0) {
+                     myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
+                 }
+                 else {
+                     myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
+                 }
+                 movimientos++;
+                 myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
+                 myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
+                 myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
+                 myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
+                 finish = true;
+             } catch (InterruptedException ex) {
+                 Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
+             }
                 }
                 
                 if(finish == false){
@@ -246,6 +257,7 @@ public class TableAgent extends Agent {
                     msg.setLanguage("English");
                     msg.setContent(lastMov);
                     msg.addReceiver(jugadores[(player+1)%2]);
+                    myAgent.addBehaviour(new MoveRequest(myAgent, msg));
                 }
          
      }

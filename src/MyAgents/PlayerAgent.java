@@ -13,6 +13,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.proto.AchieveREResponder;
 import jade.proto.ProposeResponder;
 
 /**
@@ -22,6 +23,10 @@ import jade.proto.ProposeResponder;
 public class PlayerAgent extends Agent {
     
     boolean playing = false;
+    boolean finish = false;
+    int table[][] = new int[3][3];
+    String movement;
+    int mov;
     
     @Override
     protected void setup(){
@@ -43,6 +48,10 @@ public class PlayerAgent extends Agent {
         
         //Creamos la plantilla a emplear, para solo recibir mensajes con el protocolo FIPA_PROPOSE y la performativa PROPOSE
         MessageTemplate template = ProposeResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_PROPOSE);
+        
+        MessageTemplate protocolo = MessageTemplate.MatchProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+        MessageTemplate performativa = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
+        MessageTemplate plantilla = MessageTemplate.and(protocolo, performativa);
  
         //Añadimos el comportamiento "responderSalirClase()"
         this.addBehaviour(new ResponderOffer(this, template));
@@ -63,19 +72,186 @@ public class PlayerAgent extends Agent {
             }else{
                 answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
                 playing = true;
-                myAgent.addBehaviour(new sendMovement());
+                MessageTemplate mt;
+                mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                myAgent.addBehaviour(new SendMovement(myAgent, mt));
             }
             return answer;
         }
         
     }
-       
-    private class sendMovement extends Behaviour{
-        boolean finish = false;
-        int table[][] = new int[3][3];
-        String movement;
-        int mov;
+    
+    private class SendMovement extends AchieveREResponder{
+        
+        public SendMovement(Agent a, MessageTemplate template ){
+            super(a,template);
+        }
+        
+        @Override
+        protected ACLMessage handleRequest(ACLMessage request){
+            
+            ACLMessage agree = request.createReply();            
+            agree.setPerformative(ACLMessage.AGREE);
+            
+            return agree;
+            
+        }
+        
+        protected ACLMessage prepareResultNotification(ACLMessage request,ACLMessage response){
+            
+                if(!"".equals(request.getContent())){
+                    movement = request.getContent();
+                    switch(movement){
+                        case "1":
+                            table[0][0]=2;
+                            break;
+                        case "2":
+                            table[0][1]=2;
+                            break;
+                        case "3":
+                            table[0][2]=2;
+                            break;
+                        case "4":
+                            table[1][0]=2;
+                            break;
+                        case "5":
+                            table[1][1]=2;
+                            break;
+                        case "6":
+                            table[1][2]=2;
+                            break;
+                        case "7":
+                            table[2][0]=2;
+                            break;
+                        case "8":
+                            table[2][1]=2;
+                            break;
+                        case "9":
+                            table[2][2]=2;
+                            break;
+                    }
+                }
+            
+                mov = generateMov();
+                
+                //finish = partidaTerminada();.....
+                 ACLMessage inform = request.createReply();
+                inform.setPerformative(ACLMessage.INFORM);
+                inform.setContent(String.valueOf(mov));
+                
+                
+                //Comprobar si se ha ganado la partida
+                if(table[0][0]==1){
+                    if(table[0][1]==1){
+                        if(table[0][2]==1) {
+                            inform.setContent(String.valueOf(mov) + "123");
+                        }
+                    }else if(table[1][0]==1){
+                        if(table[2][0]==1) {
+                            inform.setContent(String.valueOf(mov) + "147");
+                        }
+                    }else if(table[1][1]==1){
+                        if(table[2][2]==1) {
+                            inform.setContent(String.valueOf(mov) + "159");
+                        }
+                    }
+                }else if (table[1][1]==1){
+                    if(table[0][1]==1){
+                        if(table[2][1]==1) {
+                            inform.setContent(String.valueOf(mov) + "258");
+                        }
+                    }else if(table[1][0]==1){
+                        if(table[1][2]==1) {
+                            inform.setContent(String.valueOf(mov) + "456");
+                        }
+                    }
+                }else if (table[2][2]==1){
+                    if(table[2][1]==1){
+                        if(table[2][0]==1) {
+                            inform.setContent(String.valueOf(mov) + "789");
+                        }
+                    }else if(table[1][2]==1){
+                        if(table[0][2]==1) {
+                            inform.setContent(String.valueOf(mov) + "369");
+                        }
+                    }
+                }
+                    
+                return inform;
 
+            
+            
+        }
+        
+        private int generateMov() {
+            boolean found = false;
+            int move;
+            do{
+                move=(int) (Math.random() * 9)+1;
+                switch(move){
+                        case 1:
+                            if(table[0][0]==0){
+                                table[0][0]=1;
+                                found = true;
+                            }
+                            break;
+                        case 2:
+                            if(table[0][1]==0){
+                                table[0][1]=1;
+                                found = true;
+                            }
+                            break;
+                        case 3:
+                            if(table[0][2]==0){
+                                table[0][2]=1;
+                                found = true;
+                            }
+                            break;
+                        case 4:
+                            if(table[1][0]==0){
+                                table[1][0]=1;
+                                found = true;
+                            }
+                            break;
+                        case 5:
+                            if(table[1][1]==0){
+                                table[1][1]=1;
+                                found = true;
+                            }
+                            break;
+                        case 6:
+                            if(table[1][2]==0){
+                                table[1][2]=1;
+                                found = true;
+                            }
+                            break;
+                        case 7:
+                            if(table[2][0]==0){
+                                table[2][0]=1;
+                                found = true;
+                            }
+                            break;
+                        case 8:
+                            if(table[2][1]==0){
+                                table[2][1]=1;
+                                found = true;
+                            }
+                            break;
+                        case 9:
+                            if(table[2][2]==0){
+                                table[2][2]=1;
+                                found = true;
+                            }
+                            break;
+                    }
+            }while(!found);
+            return move;
+        }
+        
+    }
+       
+    /*private class sendMovement extends Behaviour{
+        
         @Override
         public void action() {
             ACLMessage msg = myAgent.receive();
@@ -237,7 +413,7 @@ public class PlayerAgent extends Agent {
             return move;
         }
         
-    }
+    }*/
 }
 
 
