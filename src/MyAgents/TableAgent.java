@@ -169,7 +169,6 @@ public class TableAgent extends Agent {
                 msg.setLanguage("English");
                 msg.setContent(lastMov);
                 msg.addReceiver(jugadores[player]);
-                player = (player+1)%2;
                 myAgent.addBehaviour(new MoveRequest(myAgent, msg));
             }
         }
@@ -218,12 +217,7 @@ public class TableAgent extends Agent {
                         myGUI.popPupMessage("DRAW");
                     }
                     
-                    if(player==1) {
-                        player=0;
-                    }
-                    else {
-                        player=1;
-                    }
+                    
                     
                 }else if(msg.getContent().length() == 4){
              try {
@@ -251,12 +245,19 @@ public class TableAgent extends Agent {
              }
                 }
                 
+                if(player==1) {
+                        player=0;
+                    }
+                    else {
+                        player=1;
+                    }
+                
                 if(finish == false){
                     msg = new ACLMessage(ACLMessage.REQUEST);
                     msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
                     msg.setLanguage("English");
                     msg.setContent(lastMov);
-                    msg.addReceiver(jugadores[(player+1)%2]);
+                    msg.addReceiver(jugadores[player]);
                     myAgent.addBehaviour(new MoveRequest(myAgent, msg));
                 }
          
