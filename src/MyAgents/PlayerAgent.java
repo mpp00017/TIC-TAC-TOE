@@ -122,49 +122,45 @@ public class PlayerAgent extends Agent {
                 
                 //Comprobar si se ha ganado la partida
                 if(table[0][0]==1){
-                    if(table[0][1]==1){
-                        if(table[0][2]==1) {
+                    if(table[0][1]==1)
+                        if(table[0][2]==1)
                             msgToTable.setContent(String.valueOf(mov) + "123");
-                        }
-                    }else if(table[1][0]==1){
-                        if(table[2][0]==1) {
+                        
+                    if(table[1][0]==1)
+                        if(table[2][0]==1)
                             msgToTable.setContent(String.valueOf(mov) + "147");
-                        }
-                    }else if(table[1][1]==1){
-                        if(table[2][2]==1) {
+                            
+                    if(table[1][1]==1)
+                        if(table[2][2]==1)
                             msgToTable.setContent(String.valueOf(mov) + "159");
-                        }
-                    }
-                }else if (table[1][1]==1){
-                    if(table[0][1]==1){
-                        if(table[2][1]==1) {
+                }
+                
+                if (table[1][1]==1){
+                    if(table[0][1]==1)
+                        if(table[2][1]==1)
                             msgToTable.setContent(String.valueOf(mov) + "258");
-                        }
-                    }else if(table[1][0]==1){
-                        if(table[1][2]==1) {
+                        
+                    if(table[1][0]==1)
+                        if(table[1][2]==1)
                             msgToTable.setContent(String.valueOf(mov) + "456");
-                        }
-                    }
-                }else if (table[2][2]==1){
-                    if(table[2][1]==1){
-                        if(table[2][0]==1) {
+                }
+                
+                if (table[2][2]==1){
+                    if(table[2][1]==1)
+                        if(table[2][0]==1)
                             msgToTable.setContent(String.valueOf(mov) + "789");
-                        }
-                    }else if(table[1][2]==1){
-                        if(table[0][2]==1) {
+                    
+                    if(table[1][2]==1)
+                        if(table[0][2]==1) 
                             msgToTable.setContent(String.valueOf(mov) + "369");
-                        }
-                    }
                 }
                     
                 msgToTable.addReceiver(msg.getSender());
                 send(msgToTable);
                 //System.out.println(myAgent.getLocalName()+" : "+mov);
 
-            }else{
+            }else
                 block();
-            }
-            
         }
 
         @Override

@@ -49,9 +49,10 @@ public class TableAgent extends Agent {
         try{
             DFAgentDescription[] result = DFService.search(this, template);
             playerAgents = new AID[result.length];
-            for(int i=0; i < result.length;i++){
+            
+            for(int i=0; i < result.length;i++)
                 playerAgents[i] = result[i].getName();
-            }
+            
         }catch(FIPAException fe){}
         
         
@@ -60,9 +61,8 @@ public class TableAgent extends Agent {
          msg.setLanguage("English");
          msg.setContent("Would you like to play?");
          
-        for(int i=0;i<playerAgents.length;i++){
+        for(int i=0;i<playerAgents.length;i++)
             msg.addReceiver(playerAgents[i]);
-        }
         
         this.addBehaviour(new CreateGame(this,msg));
     }
@@ -94,24 +94,21 @@ public class TableAgent extends Agent {
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     myGUI.setMovement(lastMov, player);
-                    if(player==0) {
+                    
+                    if(player==0) 
                         myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    }
-                    else {
+                    else 
                         myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                    }
+                    
                     movimientos++;
                     
-                    if(movimientos==9) {
+                    if(movimientos==9) 
                         myGUI.popPupMessage("DRAW");
-                    }
                     
-                    if(player==1) {
+                    if(player==1) 
                         player=0;
-                    }
-                    else {
+                    else 
                         player=1;
-                    }
                     
                 }else if(msg.getContent().length() == 4){
                         //ha ganado
@@ -121,12 +118,11 @@ public class TableAgent extends Agent {
                         lastMov=lastMov+lastMovChar[0];
                         
                         myGUI.setMovement(lastMov, player);
-                        if(player==0) {
+                        if(player==0)
                             myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                        }
-                        else {
+                        else
                             myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                        }
+                        
                         movimientos++;
                         myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
                         myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
@@ -135,9 +131,9 @@ public class TableAgent extends Agent {
                         finish = true;
                 }
                 
-            }else {
+            }else
                 block();
-            }
+            
         }
 
         @Override
@@ -198,12 +194,11 @@ public class TableAgent extends Agent {
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     myGUI.setMovement(lastMov, player);
-                    if(player==0) {
+                    if(player==0)
                         myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    }
-                    else {
+                    else
                         myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                    }
+                    
                     movimientos++;
                     
                     if(movimientos==9) {
@@ -211,12 +206,10 @@ public class TableAgent extends Agent {
                         myGUI.popPupMessage("DRAW");
                     }
                     
-                    if(player==1) {
+                    if(player==1)
                         player=0;
-                    }
-                    else {
+                    else 
                         player=1;
-                    }
                     
                 }else if(msg.getContent().length() == 4){
                         //ha ganado
@@ -226,12 +219,11 @@ public class TableAgent extends Agent {
                         lastMov=lastMov+lastMovChar[0];
                         
                         myGUI.setMovement(lastMov, player);
-                        if(player==0) {
+                        if(player==0)
                             myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                        }
-                        else {
+                        else
                             myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                        }
+                        
                         movimientos++;
                         myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
                         myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
