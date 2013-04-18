@@ -96,90 +96,116 @@ public class PlayerAgent extends Agent {
             
         }
         
+        @Override
         protected ACLMessage prepareResultNotification(ACLMessage request,ACLMessage response){
             
+            ACLMessage inform = request.createReply();
+            inform.setPerformative(ACLMessage.INFORM);
+            
+            if(request.getContent().length()>1){
+                playing = false;
+                for(int i=0; i<3; i++)
+                    for(int j=0; j<3; j++)
+                        table[i][j]=0;
+                if("Empate".equals(request.getContent())) inform.setContent("Empate");
+                else inform.setContent("Enhorabuena");
+                
+            }else if(request.getContent().length()<=1){ 
                 if(!"".equals(request.getContent())){
-                    movement = request.getContent();
-                    switch(movement){
-                        case "1":
-                            table[0][0]=2;
-                            break;
-                        case "2":
-                            table[0][1]=2;
-                            break;
-                        case "3":
-                            table[0][2]=2;
-                            break;
-                        case "4":
-                            table[1][0]=2;
-                            break;
-                        case "5":
-                            table[1][1]=2;
-                            break;
-                        case "6":
-                            table[1][2]=2;
-                            break;
-                        case "7":
-                            table[2][0]=2;
-                            break;
-                        case "8":
-                            table[2][1]=2;
-                            break;
-                        case "9":
-                            table[2][2]=2;
-                            break;
+                movement = request.getContent();
+                switch(movement){
+                    case "1":
+                        table[0][0]=2;
+                        break;
+                    case "2":
+                        table[0][1]=2;
+                        break;
+                    case "3":
+                        table[0][2]=2;
+                        break;
+                    case "4":
+                        table[1][0]=2;
+                        break;
+                    case "5":
+                        table[1][1]=2;
+                        break;
+                    case "6":
+                        table[1][2]=2;
+                        break;
+                    case "7":
+                        table[2][0]=2;
+                        break;
+                    case "8":
+                        table[2][1]=2;
+                        break;
+                    case "9":
+                        table[2][2]=2;
+                        break;
                     }
                 }
             
+            
                 mov = generateMov();
-                
-                //finish = partidaTerminada();.....
-                 ACLMessage inform = request.createReply();
-                inform.setPerformative(ACLMessage.INFORM);
                 inform.setContent(String.valueOf(mov));
                 
-                
-                //Comprobar si se ha ganado la partida
                 if(table[0][0]==1){
-                    if(table[0][1]==1){
+                    if(table[0][1]==1) {
                         if(table[0][2]==1) {
                             inform.setContent(String.valueOf(mov) + "123");
                         }
-                    }else if(table[1][0]==1){
+                    }
+                        
+                    if(table[1][0]==1) {
                         if(table[2][0]==1) {
                             inform.setContent(String.valueOf(mov) + "147");
                         }
-                    }else if(table[1][1]==1){
+                    }
+                        
+                    if(table[1][1]==1) {
                         if(table[2][2]==1) {
                             inform.setContent(String.valueOf(mov) + "159");
                         }
                     }
-                }else if (table[1][1]==1){
-                    if(table[0][1]==1){
+                }
+                if (table[1][1]==1){
+                    if(table[0][1]==1) {
                         if(table[2][1]==1) {
                             inform.setContent(String.valueOf(mov) + "258");
                         }
-                    }else if(table[1][0]==1){
+                    }
+                        
+                    if(table[1][0]==1) {
                         if(table[1][2]==1) {
                             inform.setContent(String.valueOf(mov) + "456");
                         }
                     }
-                }else if (table[2][2]==1){
-                    if(table[2][1]==1){
+                    
+                    if(table[0][2]==1)
+                        if(table[2][0]==1)
+                            inform.setContent(String.valueOf(mov) + "357");
+                }
+                if (table[2][2]==1){
+                    if(table[2][1]==1) {
                         if(table[2][0]==1) {
                             inform.setContent(String.valueOf(mov) + "789");
-                        }
-                    }else if(table[1][2]==1){
+                    }
+                    }
+                        
+                    if(table[1][2]==1) {
                         if(table[0][2]==1) {
                             inform.setContent(String.valueOf(mov) + "369");
                         }
                     }
                 }
-                    
-                return inform;
-
-            
-            
+                if (inform.getContent().length()==4) {
+                playing = false;
+                for(int i=0; i<3; i++)
+                    for(int j=0; j<3; j++)
+                        table[i][j]=0;
+            }
+            }
+                
+                return inform;           
         }
         
         private int generateMov() {
@@ -248,171 +274,6 @@ public class PlayerAgent extends Agent {
         }
         
     }
-       
-    /*private class sendMovement extends Behaviour{
-        
-        @Override
-        public void action() {
-            ACLMessage msg = myAgent.receive();
-            if(msg != null){
-                if(!"".equals(msg.getContent())){
-                    movement = msg.getContent();
-                    switch(movement){
-                        case "1":
-                            table[0][0]=2;
-                            break;
-                        case "2":
-                            table[0][1]=2;
-                            break;
-                        case "3":
-                            table[0][2]=2;
-                            break;
-                        case "4":
-                            table[1][0]=2;
-                            break;
-                        case "5":
-                            table[1][1]=2;
-                            break;
-                        case "6":
-                            table[1][2]=2;
-                            break;
-                        case "7":
-                            table[2][0]=2;
-                            break;
-                        case "8":
-                            table[2][1]=2;
-                            break;
-                        case "9":
-                            table[2][2]=2;
-                            break;
-                    }
-                }
-            
-                mov = generateMov();
-                
-                //finish = partidaTerminada();.....
-                ACLMessage msgToTable = new ACLMessage(ACLMessage.INFORM);
-                msgToTable.setLanguage("English");
-                msgToTable.setContent(String.valueOf(mov));
-                
-                //Comprobar si se ha ganado la partida
-                if(table[0][0]==1){
-                    if(table[0][1]==1){
-                        if(table[0][2]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "123");
-                        }
-                    }else if(table[1][0]==1){
-                        if(table[2][0]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "147");
-                        }
-                    }else if(table[1][1]==1){
-                        if(table[2][2]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "159");
-                        }
-                    }
-                }else if (table[1][1]==1){
-                    if(table[0][1]==1){
-                        if(table[2][1]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "258");
-                        }
-                    }else if(table[1][0]==1){
-                        if(table[1][2]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "456");
-                        }
-                    }
-                }else if (table[2][2]==1){
-                    if(table[2][1]==1){
-                        if(table[2][0]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "789");
-                        }
-                    }else if(table[1][2]==1){
-                        if(table[0][2]==1) {
-                            msgToTable.setContent(String.valueOf(mov) + "369");
-                        }
-                    }
-                }
-                    
-                msgToTable.addReceiver(msg.getSender());
-                send(msgToTable);
-                //System.out.println(myAgent.getLocalName()+" : "+mov);
-
-            }else{
-                block();
-            }
-            
-        }
-
-        @Override
-        public boolean done() {
-            return finish;
-        }
-
-        private int generateMov() {
-            boolean found = false;
-            int move;
-            do{
-                move=(int) (Math.random() * 9)+1;
-                switch(move){
-                        case 1:
-                            if(table[0][0]==0){
-                                table[0][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 2:
-                            if(table[0][1]==0){
-                                table[0][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 3:
-                            if(table[0][2]==0){
-                                table[0][2]=1;
-                                found = true;
-                            }
-                            break;
-                        case 4:
-                            if(table[1][0]==0){
-                                table[1][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 5:
-                            if(table[1][1]==0){
-                                table[1][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 6:
-                            if(table[1][2]==0){
-                                table[1][2]=1;
-                                found = true;
-                            }
-                            break;
-                        case 7:
-                            if(table[2][0]==0){
-                                table[2][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 8:
-                            if(table[2][1]==0){
-                                table[2][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 9:
-                            if(table[2][2]==0){
-                                table[2][2]=1;
-                                found = true;
-                            }
-                            break;
-                    }
-            }while(!found);
-            return move;
-        }
-        
-    }*/
 }
-
-
+       
+    

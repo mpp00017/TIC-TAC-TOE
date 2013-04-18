@@ -577,4 +577,25 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
                 break;
         }
     }
+
+    void setInterface(String[] movimientos, String[] movVictoria, int ganador, String poppup,int nmov,String jugador0, String jugador1) throws InterruptedException {
+        System.out.println("Numero de movimientos "+nmov);
+        for(int i=0; i<nmov;i++){
+            Thread.sleep(700);
+            if(i%2==0) {
+                        setTextConsole1(jugador0, movimientos[i]);
+                    }
+                    else {
+                        setTextConsole2(jugador1, movimientos[i]);
+                    }
+            setMovement(movimientos[i],i%2);
+        }
+        Thread.sleep(500);
+        if(!"DRAW".equals(poppup)){
+            setMovementV(movVictoria[0], ganador);
+            setMovementV(movVictoria[1], ganador);
+            setMovementV(movVictoria[2], ganador);
+        }
+        popPupMessage(poppup);
+    }
 }

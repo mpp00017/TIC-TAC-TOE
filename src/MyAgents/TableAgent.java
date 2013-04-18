@@ -6,7 +6,6 @@ package MyAgents;
 
 import jade.core.AID;
 import jade.core.Agent;
-import jade.core.behaviours.Behaviour;
 import jade.domain.DFService;
 import jade.domain.FIPAAgentManagement.DFAgentDescription;
 import jade.domain.FIPAAgentManagement.ServiceDescription;
@@ -29,7 +28,11 @@ public class TableAgent extends Agent {
     boolean finish = false;
     String lastMov = "";
     int player = 0;
-    int movimientos=0;
+    String movimientos[] = new String[9];
+    String movVictoria[] = new String[3];
+    String poppup;
+    int ganador;
+    int nmov=0;
     
     @Override
     protected void setup(){
@@ -67,86 +70,6 @@ public class TableAgent extends Agent {
         this.addBehaviour(new CreateGame(this,msg));
     }
     
-    /*private class StartGame extends Behaviour{
-        
-        
-    StartGame(AID[] jugadores){};
-        
-        @Override
-        public void action() {
-            myGUI.setTextPlayers(jugadores[0].getLocalName(), jugadores[1].getLocalName());
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-            msg.setLanguage("English");
-            msg.setContent(lastMov);
-            msg.addReceiver(jugadores[player]);
-            send(msg);
-            
-            
-            try {
-                Thread.sleep (1000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            msg = myAgent.receive();
-            if(msg != null){
-                System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
-                if(msg.getContent().length() == 1){
-                    lastMov = msg.getContent();
-                    myGUI.setMovement(lastMov, player);
-                    if(player==0) {
-                        myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    }
-                    else {
-                        myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                    }
-                    movimientos++;
-                    
-                    if(movimientos==9) {
-                        myGUI.popPupMessage("DRAW");
-                    }
-                    
-                    if(player==1) {
-                        player=0;
-                    }
-                    else {
-                        player=1;
-                    }
-                    
-                }else if(msg.getContent().length() == 4){
-                        //ha ganado
-                        char[] lastMovChar;
-                        lastMovChar=msg.getContent().toCharArray();
-                        lastMov="";
-                        lastMov=lastMov+lastMovChar[0];
-                        
-                        myGUI.setMovement(lastMov, player);
-                        if(player==0) {
-                            myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                        }
-                        else {
-                            myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                        }
-                        movimientos++;
-                        myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
-                        myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
-                        myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
-                        myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
-                        finish = true;
-                }
-                
-            }else {
-                block();
-            }
-        }
-
-        @Override
-        public boolean done() {
-            return finish || movimientos==9;
-        }
-        
-    }*/
-    
     private class CreateGame extends ProposeInitiator{
         
         private int vacantes = 2;
@@ -175,6 +98,7 @@ public class TableAgent extends Agent {
         
     }
  class MoveRequest extends AchieveREInitiator{
+        private boolean termina=true;
      
      MoveRequest(Agent a, ACLMessage msg){
          super(a,msg);
@@ -203,47 +127,53 @@ public class TableAgent extends Agent {
          System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
-                    myGUI.setMovement(lastMov, player);
-                    if(player==0) {
-                        myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                    }
-                    else {
-                        myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                    }
-                    movimientos++;
+                    movimientos[nmov]=lastMov;
+                    nmov++;
                     
-                    if(movimientos==9) {
+                    if(nmov==9) {
                         finish = true;
-                        myGUI.popPupMessage("DRAW");
+                        poppup="DRAW";
+                        
+                        msg = new ACLMessage(ACLMessage.REQUEST);
+                        msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                        msg.setLanguage("English");
+                        msg.setContent("Empate");
+                        msg.addReceiver(jugadores[0]);
+                        msg.addReceiver(jugadores[1]);
+                        myAgent.addBehaviour(new MoveRequest(myAgent, msg));
                     }
                     
                     
                     
                 }else if(msg.getContent().length() == 4){
-             try {
-                 //ha ganado
+             
                  char[] lastMovChar;
                  lastMovChar=msg.getContent().toCharArray();
                  lastMov="";
                  lastMov=lastMov+lastMovChar[0];
                  
-                 myGUI.setMovement(lastMov, player);
-                 if(player==0) {
-                     myGUI.setTextConsole1(msg.getSender().getLocalName(), lastMov);
-                 }
-                 else {
-                     myGUI.setTextConsole2(msg.getSender().getLocalName(), lastMov);
-                 }
-                 movimientos++;
-                 myGUI.setMovementV(String.valueOf(lastMovChar[1]), player);
-                 myGUI.setMovementV(String.valueOf(lastMovChar[2]), player);
-                 myGUI.setMovementV(String.valueOf(lastMovChar[3]), player);
-                 myGUI.popPupMessage(msg.getSender().getLocalName()+ " wins!");
+                 movimientos[nmov]=lastMov;
+                 
+                 nmov++;
+                 ganador = player;
+                 movVictoria[0]=String.valueOf(lastMovChar[1]);
+                 movVictoria[1]=String.valueOf(lastMovChar[2]);
+                 movVictoria[2]=String.valueOf(lastMovChar[3]);
+                 poppup= msg.getSender().getLocalName()+ " wins!";
                  finish = true;
-             } catch (InterruptedException ex) {
-                 Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
-             }
+                 
+                 lastMov=msg.getContent();
+                 
+                 msg = new ACLMessage(ACLMessage.REQUEST);
+                 msg.setProtocol(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                 msg.setLanguage("English");
+                 msg.setContent(lastMov);
+                 msg.addReceiver(jugadores[(player+1)%2]);
+                 myAgent.addBehaviour(new MoveRequest(myAgent, msg));
+                 
                 }
+                
+                
                 
                 if(player==1) {
                         player=0;
@@ -259,6 +189,12 @@ public class TableAgent extends Agent {
                     msg.setContent(lastMov);
                     msg.addReceiver(jugadores[player]);
                     myAgent.addBehaviour(new MoveRequest(myAgent, msg));
+                }else if(msg.getContent().length()==4 || (msg.getContent().length()<=4 &&nmov==9)){
+                    try {
+                        myGUI.setInterface(movimientos,movVictoria,ganador,poppup,nmov,jugadores[0].getLocalName(),jugadores[1].getLocalName());
+                    } catch (InterruptedException ex) {
+                    Logger.getLogger(TableAgent.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
          
      }
