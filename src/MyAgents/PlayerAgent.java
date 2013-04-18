@@ -12,6 +12,7 @@ import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.proto.AchieveREInitiator;
 import jade.proto.AchieveREResponder;
 import jade.proto.ProposeResponder;
 
@@ -70,12 +71,40 @@ public class PlayerAgent extends Agent {
                 answer.setPerformative(ACLMessage.REJECT_PROPOSAL);
             }else{
                 answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
+//                playing = true;
+//                MessageTemplate mt;
+//                mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
+//                myAgent.addBehaviour(new SendMovement(myAgent, mt));
+                ACLMessage msg = new ACLMessage(ACLMessage.QUERY_IF);
+                msg.setProtocol(FIPANames.InteractionProtocol.FIPA_QUERY);
+                msg.setContent("Am I playing?");
+                msg.addReceiver(proposal.getSender());
+                myAgent.addBehaviour(new AmIPlaying(myAgent, msg));
+            }
+            return answer;
+        }
+        
+    }
+    
+    private class AmIPlaying extends AchieveREInitiator{
+        
+        public AmIPlaying(Agent agent, ACLMessage msg){
+            super(agent,msg);
+        }
+        
+        @Override
+        protected void handleInform(ACLMessage inform){
+            if("YES".equals(inform.getContent())){
                 playing = true;
                 MessageTemplate mt;
                 mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                
                 myAgent.addBehaviour(new SendMovement(myAgent, mt));
+            }else if("NO".equals(inform.getContent())){
+                System.out.println(myAgent.getLocalName()+" estoy jugando!");
+                
+                playing = false;
             }
-            return answer;
         }
         
     }
@@ -107,8 +136,8 @@ public class PlayerAgent extends Agent {
                 for(int i=0; i<3; i++)
                     for(int j=0; j<3; j++)
                         table[i][j]=0;
-                if("Empate".equals(request.getContent())) inform.setContent("Empate");
-                else inform.setContent("Enhorabuena");
+                if("Empate".equals(request.getContent())) inform.setContent("Draw!");
+                else inform.setContent("Congratulations!");
                 
             }else if(request.getContent().length()<=1){ 
                 if(!"".equals(request.getContent())){

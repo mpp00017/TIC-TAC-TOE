@@ -12,7 +12,9 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.domain.FIPANames;
 import jade.lang.acl.ACLMessage;
+import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREInitiator;
+import jade.proto.AchieveREResponder;
 import jade.proto.ProposeInitiator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,6 +70,41 @@ public class TableAgent extends Agent {
         }
         
         this.addBehaviour(new CreateGame(this,msg));
+        
+        MessageTemplate mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_QUERY);
+        this.addBehaviour(new PlayerResponder(this,mt));
+        
+    }
+    
+    private class PlayerResponder extends AchieveREResponder{
+        public PlayerResponder(Agent agent, MessageTemplate mt){
+            super(agent,mt);
+        }
+        
+        @Override
+        protected ACLMessage handleRequest (ACLMessage request){
+            ACLMessage agree = request.createReply();
+            agree.setPerformative(ACLMessage.AGREE);
+            return agree;
+        }
+        
+        @Override
+        protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response){
+            ACLMessage inform = request.createReply();
+            inform.setPerformative(ACLMessage.INFORM);
+            System.out.println("PRUEBA");
+            System.out.println(jugadores[0]);
+            System.out.println(jugadores[1]);
+            if(request.getSender()==jugadores[0] || request.getSender()==jugadores[1]){
+                inform.setContent("YES");
+            }else {
+                inform.setContent("NO");
+            }
+            
+            return inform;
+            
+        }
+        
     }
     
     private class CreateGame extends ProposeInitiator{
@@ -77,6 +114,11 @@ public class TableAgent extends Agent {
         CreateGame(Agent a, ACLMessage message){
             super(a,message);
         }
+        
+        /*@Override
+        protected void handleAllResponses(java.util.Vector responses){
+            if(responses.size()<=1)
+        }*/
                 
         @Override
         protected void handleAcceptProposal(ACLMessage accepted) {
@@ -124,7 +166,7 @@ public class TableAgent extends Agent {
      @Override
      protected void handleInform(ACLMessage msg){
          
-         System.out.println(msg.getContent()+" "+msg.getSender().getLocalName());
+         System.out.println(msg.getSender()+": "+msg.getContent());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     movimientos[nmov]=lastMov;
