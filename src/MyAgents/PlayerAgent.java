@@ -94,16 +94,17 @@ public class PlayerAgent extends Agent {
         
         @Override
         protected void handleInform(ACLMessage inform){
-            if("YES".equals(inform.getContent())){
-                playing = true;
-                MessageTemplate mt;
-                mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
-                
-                myAgent.addBehaviour(new SendMovement(myAgent, mt));
-            }else if("NO".equals(inform.getContent())){
-                System.out.println(myAgent.getLocalName()+" estoy jugando!");
-                
-                playing = false;
+            switch (inform.getContent()) {
+                case "YES":
+                    playing = true;
+                    MessageTemplate mt;
+                    mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                    myAgent.addBehaviour(new SendMovement(myAgent, mt));
+                    break;
+                case "NO":
+                    System.out.println(myAgent.getLocalName()+" estoy jugando!");
+                    playing = false;
+                    break;
             }
         }
         

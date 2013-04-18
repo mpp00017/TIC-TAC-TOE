@@ -95,8 +95,9 @@ public class TableAgent extends Agent {
             System.out.println("PRUEBA");
             System.out.println(jugadores[0]);
             System.out.println(jugadores[1]);
-            if(request.getSender()==jugadores[0] || request.getSender()==jugadores[1]){
+            if(request.getSender().equals(jugadores[0]) || request.getSender().equals(jugadores[1])){
                 inform.setContent("YES");
+                System.out.println("A jugar!!");
             }else {
                 inform.setContent("NO");
             }
