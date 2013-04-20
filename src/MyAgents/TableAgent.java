@@ -25,19 +25,30 @@ import java.util.logging.Logger;
  */
 public class TableAgent extends Agent {
     AID playerAgents[];
-    AID jugadores[] = new AID[2];
+    AID jugadores[];
     TicTacToeFrame myGUI;
-    boolean finish = false;
-    String lastMov = "";
-    int player = 0;
-    String movimientos[] = new String[9];
-    String movVictoria[] = new String[3];
+    boolean finish;
+    String lastMov;
+    int player;
+    String movimientos[];
+    String movVictoria[];
     String poppup;
     int ganador;
-    int nmov=0;
+    int nmov;
+    int vacantes;
     
     @Override
     protected void setup(){
+        
+        //Inicialización de los atributos de clase
+        jugadores = new AID[2];
+        finish = false;
+        lastMov = "";
+        player = 0;
+        movimientos = new String[9];
+        movVictoria = new String[3];
+        nmov = 0;
+        vacantes = 2;
         
         myGUI = new TicTacToeFrame(this);
         myGUI.setVisible(true);
@@ -90,17 +101,19 @@ public class TableAgent extends Agent {
         
         @Override
         protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response){
+            
             ACLMessage inform = request.createReply();
             inform.setPerformative(ACLMessage.INFORM);
             System.out.println("PRUEBA");
-            System.out.println(jugadores[0]);
+            System.out.println(request.getSender());
             System.out.println(jugadores[1]);
-            if(request.getSender()==jugadores[0] || request.getSender()==jugadores[1]){
+            
+            if(request.getSender().compareTo(jugadores[0])==0 || request.getSender().compareTo(jugadores[1])==0){
                 inform.setContent("YES");
             }else {
                 inform.setContent("NO");
             }
-            
+            System.out.println(inform.getContent());
             return inform;
             
         }
@@ -109,16 +122,19 @@ public class TableAgent extends Agent {
     
     private class CreateGame extends ProposeInitiator{
         
-        private int vacantes = 2;
         
         CreateGame(Agent a, ACLMessage message){
             super(a,message);
         }
         
-        /*@Override
+        @Override
         protected void handleAllResponses(java.util.Vector responses){
-            if(responses.size()<=1)
-        }*/
+            if(responses.size()<=1) {
+                jugadores = new AID[2];
+                vacantes = 2;
+            }
+            System.out.println("allresponses vacantes: "+vacantes);            
+        }
                 
         @Override
         protected void handleAcceptProposal(ACLMessage accepted) {
@@ -166,7 +182,7 @@ public class TableAgent extends Agent {
      @Override
      protected void handleInform(ACLMessage msg){
          
-         System.out.println(msg.getSender()+": "+msg.getContent());
+         System.out.println(msg.getSender().getLocalName()+": "+msg.getContent());
                 if(msg.getContent().length() == 1){
                     lastMov = msg.getContent();
                     movimientos[nmov]=lastMov;
@@ -231,7 +247,7 @@ public class TableAgent extends Agent {
                     msg.setContent(lastMov);
                     msg.addReceiver(jugadores[player]);
                     myAgent.addBehaviour(new MoveRequest(myAgent, msg));
-                }else if(msg.getContent().length()==4 || (msg.getContent().length()<=4 &&nmov==9)){
+                }else if(msg.getContent().length()==4 || (msg.getContent().length()<=4 && nmov==9)){
                     try {
                         myGUI.setInterface(movimientos,movVictoria,ganador,poppup,nmov,jugadores[0].getLocalName(),jugadores[1].getLocalName());
                     } catch (InterruptedException ex) {

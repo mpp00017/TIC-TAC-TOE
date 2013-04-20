@@ -15,6 +15,8 @@ import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREInitiator;
 import jade.proto.AchieveREResponder;
 import jade.proto.ProposeResponder;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -79,6 +81,11 @@ public class PlayerAgent extends Agent {
                 msg.setProtocol(FIPANames.InteractionProtocol.FIPA_QUERY);
                 msg.setContent("Am I playing?");
                 msg.addReceiver(proposal.getSender());
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(PlayerAgent.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 myAgent.addBehaviour(new AmIPlaying(myAgent, msg));
             }
             return answer;
@@ -94,16 +101,18 @@ public class PlayerAgent extends Agent {
         
         @Override
         protected void handleInform(ACLMessage inform){
-            if("YES".equals(inform.getContent())){
-                playing = true;
-                MessageTemplate mt;
-                mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
-                
-                myAgent.addBehaviour(new SendMovement(myAgent, mt));
-            }else if("NO".equals(inform.getContent())){
-                System.out.println(myAgent.getLocalName()+" estoy jugando!");
-                
-                playing = false;
+            switch (inform.getContent()) {
+                case "YES":
+                    System.out.println(myAgent.getLocalName()+": Que voy a jugar!! :D");
+                    playing = true;
+                    MessageTemplate mt;
+                    mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
+                    myAgent.addBehaviour(new SendMovement(myAgent, mt));
+                    break;
+                case "NO":
+                    System.out.println(myAgent.getLocalName()+": Pues resulta de que no voy a jugar.");
+                    playing = false;
+                    break;
             }
         }
         
