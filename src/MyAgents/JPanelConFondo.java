@@ -31,6 +31,11 @@ public class JPanelConFondo extends JPanel {
             imagen = imagenInicial;
     }
 
+    /**
+     * Método que establece como fondo del JPanel la imagen indicada
+     * 
+     * @param nombreImagen Ruta de la imagen que se desea poner como fondo
+     */
     public void setImagen(String nombreImagen) {
         if (nombreImagen != null)
             imagen = new ImageIcon(getClass().getResource(nombreImagen)).getImage();
