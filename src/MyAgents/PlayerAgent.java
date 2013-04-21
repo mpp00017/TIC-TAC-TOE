@@ -43,8 +43,7 @@ public class PlayerAgent extends Agent {
         dfd.addServices(sd);
         try{
             DFService.register(this,dfd);
-        }
-        catch(FIPAException fe){}
+        }catch(FIPAException fe){}
         
         //this.addBehaviour(new WaitingOffer());
         
@@ -57,7 +56,6 @@ public class PlayerAgent extends Agent {
  
         //Añadimos el comportamiento "responderSalirClase()"
         this.addBehaviour(new ResponderOffer(this, template));
-        
     }
     
     private class ResponderOffer extends ProposeResponder{
@@ -69,9 +67,9 @@ public class PlayerAgent extends Agent {
         @Override
         protected ACLMessage prepareResponse(ACLMessage proposal){
             ACLMessage answer = proposal.createReply();
-            if(playing){
+            if(playing)
                 answer.setPerformative(ACLMessage.REJECT_PROPOSAL);
-            }else{
+            else{
                 answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
 //                playing = true;
 //                MessageTemplate mt;
@@ -86,11 +84,11 @@ public class PlayerAgent extends Agent {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(PlayerAgent.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 myAgent.addBehaviour(new AmIPlaying(myAgent, msg));
             }
             return answer;
         }
-        
     }
     
     private class AmIPlaying extends AchieveREInitiator{
@@ -115,7 +113,6 @@ public class PlayerAgent extends Agent {
                     break;
             }
         }
-        
     }
     
     private class SendMovement extends AchieveREResponder{
@@ -131,7 +128,6 @@ public class PlayerAgent extends Agent {
             agree.setPerformative(ACLMessage.AGREE);
             
             return agree;
-            
         }
         
         @Override
@@ -187,63 +183,50 @@ public class PlayerAgent extends Agent {
                 inform.setContent(String.valueOf(mov));
                 
                 if(table[0][0]==1){
-                    if(table[0][1]==1) {
-                        if(table[0][2]==1) {
+                    if(table[0][1]==1)
+                        if(table[0][2]==1)
                             inform.setContent(String.valueOf(mov) + "123");
-                        }
-                    }
                         
-                    if(table[1][0]==1) {
-                        if(table[2][0]==1) {
+                    if(table[1][0]==1)
+                        if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "147");
-                        }
-                    }
                         
-                    if(table[1][1]==1) {
-                        if(table[2][2]==1) {
+                    if(table[1][1]==1)
+                        if(table[2][2]==1)
                             inform.setContent(String.valueOf(mov) + "159");
-                        }
-                    }
                 }
+                
                 if (table[1][1]==1){
-                    if(table[0][1]==1) {
-                        if(table[2][1]==1) {
+                    if(table[0][1]==1)
+                        if(table[2][1]==1)
                             inform.setContent(String.valueOf(mov) + "258");
-                        }
-                    }
                         
-                    if(table[1][0]==1) {
-                        if(table[1][2]==1) {
+                    if(table[1][0]==1)
+                        if(table[1][2]==1) 
                             inform.setContent(String.valueOf(mov) + "456");
-                        }
-                    }
                     
                     if(table[0][2]==1)
                         if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "357");
                 }
                 if (table[2][2]==1){
-                    if(table[2][1]==1) {
-                        if(table[2][0]==1) {
+                    if(table[2][1]==1)
+                        if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "789");
-                    }
-                    }
                         
-                    if(table[1][2]==1) {
-                        if(table[0][2]==1) {
+                    if(table[1][2]==1)
+                        if(table[0][2]==1)
                             inform.setContent(String.valueOf(mov) + "369");
-                        }
-                    }
                 }
-                if (inform.getContent().length()==4) {
-                playing = false;
-                for(int i=0; i<3; i++)
-                    for(int j=0; j<3; j++)
-                        table[i][j]=0;
-            }
-            }
                 
-                return inform;           
+                if (inform.getContent().length()==4) {
+                    playing = false;
+                    for(int i=0; i<3; i++)
+                        for(int j=0; j<3; j++)
+                            table[i][j]=0;
+                }
+            }
+            return inform;           
         }
         
         private int generateMov() {
@@ -252,65 +235,65 @@ public class PlayerAgent extends Agent {
             do{
                 move=(int) (Math.random() * 9)+1;
                 switch(move){
-                        case 1:
-                            if(table[0][0]==0){
-                                table[0][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 2:
-                            if(table[0][1]==0){
-                                table[0][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 3:
-                            if(table[0][2]==0){
-                                table[0][2]=1;
-                                found = true;
-                            }
-                            break;
-                        case 4:
-                            if(table[1][0]==0){
-                                table[1][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 5:
-                            if(table[1][1]==0){
-                                table[1][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 6:
-                            if(table[1][2]==0){
-                                table[1][2]=1;
-                                found = true;
-                            }
-                            break;
-                        case 7:
-                            if(table[2][0]==0){
-                                table[2][0]=1;
-                                found = true;
-                            }
-                            break;
-                        case 8:
-                            if(table[2][1]==0){
-                                table[2][1]=1;
-                                found = true;
-                            }
-                            break;
-                        case 9:
-                            if(table[2][2]==0){
-                                table[2][2]=1;
-                                found = true;
-                            }
-                            break;
+                case 1:
+                    if(table[0][0]==0){
+                        table[0][0]=1;
+                        found = true;
                     }
+                    break;
+                case 2:
+                    if(table[0][1]==0){
+                        table[0][1]=1;
+                        found = true;
+                    }
+                    break;
+                case 3:
+                    if(table[0][2]==0){
+                        table[0][2]=1;
+                        found = true;
+                    }
+                    break;
+                case 4:
+                    if(table[1][0]==0){
+                        table[1][0]=1;
+                        found = true;
+                    }
+                    break;
+                case 5:
+                    if(table[1][1]==0){
+                        table[1][1]=1;
+                        found = true;
+                    }
+                    break;
+                case 6:
+                    if(table[1][2]==0){
+                        table[1][2]=1;
+                        found = true;
+                    }
+                    break;
+                case 7:
+                    if(table[2][0]==0){
+                        table[2][0]=1;
+                        found = true;
+                    }
+                    break;
+                case 8:
+                    if(table[2][1]==0){
+                        table[2][1]=1;
+                        found = true;
+                    }
+                    break;
+                case 9:
+                    if(table[2][2]==0){
+                        table[2][2]=1;
+                        found = true;
+                    }
+                    break;
+                }
             }while(!found);
+            
             return move;
         }
-        
     }
 }
        

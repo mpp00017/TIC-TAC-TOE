@@ -67,10 +67,9 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
 
         jFrame1.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         jFrame1.setMinimumSize(new java.awt.Dimension(400, 130));
-        jFrame1.setPreferredSize(new java.awt.Dimension(400, 130));
         jFrame1.setResizable(false);
 
-        popPupLabel.setFont(new java.awt.Font("Ubuntu", 1, 48)); // NOI18N
+        popPupLabel.setFont(new java.awt.Font("Ubuntu", 1, 24)); // NOI18N
         popPupLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
@@ -93,7 +92,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         PanelFondo.setOpaque(false);
         PanelFondo.setPreferredSize(new java.awt.Dimension(706, 505));
 
-        Panel31.setBorder(null);
         Panel31.setOpaque(false);
 
         javax.swing.GroupLayout Panel31Layout = new javax.swing.GroupLayout(Panel31);
@@ -107,7 +105,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel33.setBorder(null);
         Panel33.setOpaque(false);
 
         javax.swing.GroupLayout Panel33Layout = new javax.swing.GroupLayout(Panel33);
@@ -121,7 +118,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel32.setBorder(null);
         Panel32.setOpaque(false);
 
         javax.swing.GroupLayout Panel32Layout = new javax.swing.GroupLayout(Panel32);
@@ -135,7 +131,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel21.setBorder(null);
         Panel21.setOpaque(false);
 
         javax.swing.GroupLayout Panel21Layout = new javax.swing.GroupLayout(Panel21);
@@ -149,7 +144,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel22.setBorder(null);
         Panel22.setOpaque(false);
 
         javax.swing.GroupLayout Panel22Layout = new javax.swing.GroupLayout(Panel22);
@@ -163,7 +157,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel23.setBorder(null);
         Panel23.setOpaque(false);
 
         javax.swing.GroupLayout Panel23Layout = new javax.swing.GroupLayout(Panel23);
@@ -177,7 +170,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 96, Short.MAX_VALUE)
         );
 
-        Panel13.setBorder(null);
         Panel13.setOpaque(false);
         Panel13.setPreferredSize(new java.awt.Dimension(96, 96));
 
@@ -192,7 +184,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        Panel11.setBorder(null);
         Panel11.setOpaque(false);
         Panel11.setPreferredSize(new java.awt.Dimension(96, 96));
 
@@ -233,7 +224,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
             .addGap(0, 94, Short.MAX_VALUE)
         );
 
-        Panel12.setBorder(null);
         Panel12.setOpaque(false);
 
         javax.swing.GroupLayout Panel12Layout = new javax.swing.GroupLayout(Panel12);
@@ -407,6 +397,90 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         });
     }
     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Panel11;
+    private javax.swing.JPanel Panel12;
+    private javax.swing.JPanel Panel13;
+    private javax.swing.JPanel Panel21;
+    private javax.swing.JPanel Panel22;
+    private javax.swing.JPanel Panel23;
+    private javax.swing.JPanel Panel31;
+    private javax.swing.JPanel Panel32;
+    private javax.swing.JPanel Panel33;
+    private javax.swing.JPanel PanelFondo;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabelPlayer1;
+    private javax.swing.JLabel jLabelPlayer2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JPanel panelHeader;
+    private javax.swing.JPanel panelIcon;
+    private javax.swing.JPanel player1Icon;
+    private javax.swing.JPanel player2Icon;
+    private javax.swing.JLabel popPupLabel;
+    // End of variables declaration//GEN-END:variables
+
+    void setMovementV(String mov, int player) throws InterruptedException{
+        switch (mov) {
+            case "1":
+                if(player==0)
+                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCircle.png");
+                break;
+            case "2":
+                if(player==0)
+                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCircle.png");
+                break;
+            case "3":
+                if(player==0)
+                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCircle.png");
+                break;
+            case "4":
+                if(player==0)
+                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCircle.png");
+                break;
+            case "5":
+                if(player==0)
+                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCircle.png");
+                break;
+            case "6":
+                if(player==0)
+                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCircle.png");
+                break;  
+            case "7":
+                if(player==0)
+                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCircle.png");
+                break;       
+            case "8":
+                if(player==0)
+                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCircle.png");
+                break;
+            case "9":
+                if(player==0)
+                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCross.png");
+                else
+                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCircle.png");
+                break;
+        }
+    }
+    
     public void setImages(){
         ((JPanelConFondo) PanelFondo).setImagen("Images/fondo.png");
         ((JPanelConFondo) panelIcon).setImagen("Images/icono.png");
@@ -492,90 +566,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         popPupLabel.setText(txt);
         
         jFrame1.setVisible(true);
-    }
-    
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel Panel11;
-    private javax.swing.JPanel Panel12;
-    private javax.swing.JPanel Panel13;
-    private javax.swing.JPanel Panel21;
-    private javax.swing.JPanel Panel22;
-    private javax.swing.JPanel Panel23;
-    private javax.swing.JPanel Panel31;
-    private javax.swing.JPanel Panel32;
-    private javax.swing.JPanel Panel33;
-    private javax.swing.JPanel PanelFondo;
-    private javax.swing.JFrame jFrame1;
-    private javax.swing.JLabel jLabelPlayer1;
-    private javax.swing.JLabel jLabelPlayer2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JPanel panelHeader;
-    private javax.swing.JPanel panelIcon;
-    private javax.swing.JPanel player1Icon;
-    private javax.swing.JPanel player2Icon;
-    private javax.swing.JLabel popPupLabel;
-    // End of variables declaration//GEN-END:variables
-
-    void setMovementV(String mov, int player) throws InterruptedException{
-        switch (mov) {
-            case "1":
-                if(player==0)
-                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel11).setImagen("Images/VictoryCircle.png");
-                break;
-            case "2":
-                if(player==0)
-                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel12).setImagen("Images/VictoryCircle.png");
-                break;
-            case "3":
-                if(player==0)
-                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel13).setImagen("Images/VictoryCircle.png");
-                break;
-            case "4":
-                if(player==0)
-                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel21).setImagen("Images/VictoryCircle.png");
-                break;
-            case "5":
-                if(player==0)
-                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel22).setImagen("Images/VictoryCircle.png");
-                break;
-            case "6":
-                if(player==0)
-                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel23).setImagen("Images/VictoryCircle.png");
-                break;  
-            case "7":
-                if(player==0)
-                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel31).setImagen("Images/VictoryCircle.png");
-                break;       
-            case "8":
-                if(player==0)
-                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel32).setImagen("Images/VictoryCircle.png");
-                break;
-            case "9":
-                if(player==0)
-                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCross.png");
-                else
-                    ((JPanelConFondo) Panel33).setImagen("Images/VictoryCircle.png");
-                break;
-        }
     }
 
     void setInterface(String[] movimientos, String[] movVictoria, int ganador, String poppup,int nmov,String jugador0, String jugador1) throws InterruptedException {

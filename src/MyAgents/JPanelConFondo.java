@@ -21,23 +21,20 @@ public class JPanelConFondo extends JPanel {
     }
 
     public JPanelConFondo(String nombreImagen) {
-        if (nombreImagen != null) {
+        if (nombreImagen != null)
             imagen = new ImageIcon(getClass().getResource(nombreImagen)).getImage();
-        }
     }
     
     public JPanelConFondo(Image imagenInicial) {
-        if (imagenInicial != null) {
+        if (imagenInicial != null)
             imagen = imagenInicial;
-        }
     }
 
     public void setImagen(String nombreImagen) {
-        if (nombreImagen != null) {
+        if (nombreImagen != null)
             imagen = new ImageIcon(getClass().getResource(nombreImagen)).getImage();
-        } else {
+        else
             imagen = null;
-        }
 
         repaint();
     }
@@ -50,8 +47,7 @@ public class JPanelConFondo extends JPanel {
  
     @Override
     public void paint(Graphics g) {
-        g.drawImage(imagen, 0, 0, getWidth(), getHeight(),
-                        this);
+        g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
  
         setOpaque(false);
         super.paint(g);
