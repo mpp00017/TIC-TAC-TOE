@@ -145,7 +145,8 @@ public class TableAgent extends Agent {
     }
     
     /**
-     * Tarea que implementa el protocolo CFP para seleccionar los jugadores que jugarán la partida
+     * Tarea que implementa el protocolo CFP para seleccionar los jugadores 
+     * que jugarán la partida
      */
     private class CreateGame extends ProposeInitiator{
         
@@ -160,7 +161,10 @@ public class TableAgent extends Agent {
         }
         
         /**
-         * Este método se invocará una vez se hayan recibido todas las respuestas esperadas o bien cuando finalice un tiempo determinado previmente establecido. Si hay menos de 2 respuestas no se tomará ninguna pues no se podrá empezar partida alguna.
+         * Este método se invocará una vez se hayan recibido todas las 
+         * respuestas esperadas o bien cuando finalice un tiempo determinado 
+         * previmente establecido. Si hay menos de 2 respuestas no se tomará 
+         * ninguna pues no se podrá empezar partida alguna.
          * 
          * @param responses vector con todas las respuestas recibidas
          */
@@ -197,7 +201,9 @@ public class TableAgent extends Agent {
     }
     
     /**
-     * Tarea que implementa el protocolo de comunicación CFP que mientras que la partida no haya terminado manda peticiones de movimientos alternativamente a los jugadores
+     * Tarea que implementa el protocolo de comunicación CFP que mientras que 
+     * la partida no haya terminado manda peticiones de movimientos 
+     * alternativamente a los jugadores
      */
     class MoveRequest extends AchieveREInitiator{
         
@@ -205,7 +211,8 @@ public class TableAgent extends Agent {
          * Constructor de MoveRequest
          * 
          * @param a agente que lanza la tarea
-         * @param msg mensaje que se mandará como inicio del protocolo de comunicación CFP
+         * @param msg mensaje que se mandará como inicio del protocolo de 
+         * comunicación CFP
          */
         MoveRequest(Agent a, ACLMessage msg){
             super(a,msg);
