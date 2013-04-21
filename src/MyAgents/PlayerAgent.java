@@ -30,7 +30,7 @@ public class PlayerAgent extends Agent {
     int mov;
     
     /**
-     * Describe aqui picha
+     * Método de inicialización del agente 
      */
     @Override
     protected void setup(){
@@ -64,25 +64,25 @@ public class PlayerAgent extends Agent {
     }
     
     /**
-     * Describe aqui picha
+     * Clase que implementa el protocolo CFP encargda de responder peticiones de los tableros para iniciar partida, se aceptará siempre mientras no se esté jugando otra partida
      */
     private class ResponderOffer extends ProposeResponder{
 
         /**
-         * Describe aqui picha 
+         * Constructor de la clase ResponderOffer 
          * 
-         * @param a Agente... lo que tu veas y así todos los atributos
-         * @param template 
+         * @param a agente que lanza la tarea
+         * @param template plantilla de mensaje que se recibirá
          */
         private ResponderOffer(Agent a, MessageTemplate template) {
             super(a,template);
         }
         
          /**
-          * Describe aqui picha
+          * Método que se encarga de crear la respuesta, afirmativa siempre y cuando no se esté jugando ya
           * 
-          * @param proposal
-          * @return 
+          * @param proposal mensaje recibido con la petición del tablero
+          * @return answer respuesta que se le mandará al tablero
           */
         @Override
         protected ACLMessage prepareResponse(ACLMessage proposal){
@@ -103,14 +103,14 @@ public class PlayerAgent extends Agent {
     }
     
     /**
-     * Clase que se encarga de comprobar si un agente está jugando
+     * Clase que se encarga de consultar si un agente está jugando mediante el protocolo Query
      */
     private class AmIPlaying extends AchieveREInitiator{
         /**
-         * Describe aqui picha
+         * Constructor de la clase AmIPlaying
          * 
-         * @param agent
-         * @param msg 
+         * @param agent agente que lanza la tarea
+         * @param msg mensaje que enviará
          */
         public AmIPlaying(Agent agent, ACLMessage msg){
             super(agent,msg);
