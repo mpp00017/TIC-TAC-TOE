@@ -150,10 +150,10 @@ public class PlayerAgent extends Agent {
         }
         
         /**
-         * Describe aqui picha
+         * Manejador de la respuesta
          * 
          * @param request
-         * @return Explica lo que devuelve tambien en los return
+         * @return agree Devuelve un mensaje indicando que se acepta la petición
          */
         @Override
         protected ACLMessage handleRequest(ACLMessage request){
@@ -165,11 +165,11 @@ public class PlayerAgent extends Agent {
         }
         
         /**
-         * Describe aqui picha
+         * Método que se encarga de preparar el mensaje de respuesta al tablero con el movimiento a realizar
          * 
-         * @param request
+         * @param request Mensaje con la petición
          * @param response
-         * @return 
+         * @return inform El mensaje con la respuesta a enviar al tablero
          */
         @Override
         protected ACLMessage prepareResultNotification(ACLMessage request,ACLMessage response){

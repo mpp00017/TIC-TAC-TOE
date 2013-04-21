@@ -39,7 +39,7 @@ public class TableAgent extends Agent {
     int vacantes;
     
     /**
-     * Describe aqui picha
+     * Iniciación del agente
      */
     @Override
     protected void setup(){
@@ -55,7 +55,7 @@ public class TableAgent extends Agent {
         
         System.out.println("Table Agent: "+this.getLocalName()+" is running.");
         
-        //Search Player Agents
+        //Búsqueda de los agentes jugadores
         DFAgentDescription template = new DFAgentDescription();
         ServiceDescription sd = new ServiceDescription();
         sd.setType("Player");
@@ -93,24 +93,24 @@ public class TableAgent extends Agent {
     }
     
     /**
-     * Describe aqui picha
+     * Tarea que contestará las consultas de los jugadores
      */
     private class PlayerResponder extends AchieveREResponder{
         
         /**
-         * Describe aqui picha
+         * Constructor de la tarea PlayerResponder
          * 
-         * @param agent
-         * @param mt 
+         * @param agent agente que lanza la tarea
+         * @param mt plantilla de mensaje que aceptará
          */
         public PlayerResponder(Agent agent, MessageTemplate mt){
             super(agent,mt);
         }
         
         /**
-         * Describe aqui picha
+         * Manejador de consultas de los jugadores
          * 
-         * @param request
+         * @param request consulta recibida
          * @return 
          */
         @Override
@@ -121,11 +121,11 @@ public class TableAgent extends Agent {
         }
         
         /**
-         * Describe aqui picha
+         * Método que construye la respuesta a la consulta recibida
          * 
-         * @param request
+         * @param request consulta recibida
          * @param response
-         * @return 
+         * @return inform mensaje de respuesta a la consulta
          */
         @Override
         protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response){
@@ -147,24 +147,24 @@ public class TableAgent extends Agent {
     }
     
     /**
-     * Describe aqui picha
+     * Tarea que implementa el protocolo CFP para seleccionar los jugadores que jugarán la partida
      */
     private class CreateGame extends ProposeInitiator{
         
         /**
-         * Describe aqui picha
+         * Constructor de la clase CreateGame
          * 
-         * @param a 
-         * @param message 
+         * @param a agente que lanza la tarea
+         * @param message mensaje que se enviará para iniciar el protocolo
          */
         CreateGame(Agent a, ACLMessage message){
             super(a,message);
         }
         
         /**
-         * Describe aqui picha
+         * Este método se invocará una vez se hayan recibido todas las respuestas esperadas o bien cuando finalice un tiempo determinado previmente establecido. Si hay menos de 2 respuestas no se tomará ninguna pues no se podrá empezar partida alguna.
          * 
-         * @param responses 
+         * @param responses vector con todas las respuestas recibidas
          */
         @Override
         protected void handleAllResponses(java.util.Vector responses){
@@ -200,15 +200,15 @@ public class TableAgent extends Agent {
     }
     
     /**
-     * Describe aqui picha
+     * Tarea que implementa el protocolo de comunicación CFP que mientras que la partida no haya terminado manda peticiones de movimientos alternativamente a los jugadores
      */
     class MoveRequest extends AchieveREInitiator{
         
         /**
-         * Describe aqui picha
+         * Constructor de MoveRequest
          * 
-         * @param a
-         * @param msg 
+         * @param a agente que lanza la tarea
+         * @param msg mensaje que se mandará como inicio del protocolo de comunicación CFP
          */
         MoveRequest(Agent a, ACLMessage msg){
             super(a,msg);
