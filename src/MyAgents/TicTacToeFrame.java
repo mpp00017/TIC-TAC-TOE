@@ -8,6 +8,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
+ * Interfaz del tablero. Representa la partida, y está formada además por dos 
+ * consolas, una para cada jugador, en las que informan los movimientos que realizan.
  *
  * @author Juan Cazalla Estrella, Manuel Pancorbo Pestaña
  */
@@ -422,6 +424,13 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
     private javax.swing.JLabel popPupLabel;
     // End of variables declaration//GEN-END:variables
 
+    /**
+     * Representa movimientos en el tablero utilizando el icono de victoria.
+     * 
+     * @param mov Posición en la que se quiere colocar la ficha
+     * @param player Jugador que coloca la ficha
+     * @throws InterruptedException 
+     */
     void setMovementV(String mov, int player) throws InterruptedException{
         switch (mov) {
             case "1":
@@ -481,6 +490,10 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         }
     }
     
+    
+    /**
+     * Método para establecer las imágenes iniciales de la interfaz.
+     */
     public void setImages(){
         ((JPanelConFondo) PanelFondo).setImagen("Images/fondo.png");
         ((JPanelConFondo) panelIcon).setImagen("Images/icono.png");
@@ -489,11 +502,24 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         ((JPanelConFondo) player2Icon).setImagen("Images/circle.png");
     }
     
+    /**
+     * Escribe en la interfaz los nombres de los jugadores 1 y 2
+     * 
+     * @param player1 Nombre del jugador 1
+     * @param player2 Nombre del jugador 2
+     */
     public void setTextPlayers(String player1, String player2){   
         jLabelPlayer1.setText(player1);
         jLabelPlayer2.setText(player2);
     }
     
+    
+    /**
+     * Representa los movimienos en el tablero.
+     * 
+     * @param mov Casilla del tablero donde colocar la ficha
+     * @param player Jugador que realiza el movimiento
+     */
     public void setMovement(String mov, int player){
         switch (mov) {
             case "1":
@@ -554,29 +580,59 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
         
     }
     
+    /**
+     * Método que escribe en la consola 1 de la interfaz.
+     * 
+     * @param name Nombre del jugador 1
+     * @param text Texto que se desea escribir en la consola
+     */
     public void setTextConsole1(String name, String text){
         jTextArea1.setText(jTextArea1.getText()+ name + ": " + text + "\n");
     }
     
+    /**
+     * Método que escribe en la consola 2 de la interfaz.
+     * 
+     * @param name Nombre del jugador 2
+     * @param text Texto que se desea escribir en la consola
+     */
     public void setTextConsole2(String name, String text){
         jTextArea2.setText(jTextArea2.getText()+ name + ": " + text + "\n");
     }
     
+    /**
+     * Método para lanzar una ventana emergente con un mensaje.
+     * 
+     * @param txt Texto que se desea mostrar en la ventana emergente
+     */
     public void popPupMessage(String txt){
         popPupLabel.setText(txt);
         
         jFrame1.setVisible(true);
     }
 
-    void setInterface(String[] movimientos, String[] movVictoria, int ganador, String poppup,int nmov,String jugador0, String jugador1) throws InterruptedException {
+    /**
+     * Método que representa el transcurso de una partida.
+     * 
+     * @param movimientos Vector con los distintos movimientos que se realizan 
+     * en la partida por orden temporal
+     * @param movVictoria Vector con la combinación ganadora de una partida
+     * @param ganador Jugador que ha ganado la partida
+     * @param poppup Mensaje que se desea mostrar en la ventana emergente
+     * @param nmov Numero de movimientos que se han realizado en la partida
+     * @param jugador1 Nombre del jugador 1 
+     * @param jugador2 Nombre el jugador 2
+     * @throws InterruptedException 
+     */
+    void setInterface(String[] movimientos, String[] movVictoria, int ganador, String poppup,int nmov,String jugador1, String jugador2) throws InterruptedException {
         System.out.println("Numero de movimientos "+nmov);
         for(int i=0; i<nmov;i++){
             Thread.sleep(700);
             if(i%2==0) {
-                        setTextConsole1(jugador0, movimientos[i]);
+                        setTextConsole1(jugador1, movimientos[i]);
                     }
                     else {
-                        setTextConsole2(jugador1, movimientos[i]);
+                        setTextConsole2(jugador2, movimientos[i]);
                     }
             setMovement(movimientos[i],i%2);
         }

@@ -20,7 +20,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Clase de agente tablero para Tic-Tac-Toe
+ * 
  * @author Manuel Pancorbo Pestaña, Juan Cazalla Estrella
  */
 public class TableAgent extends Agent {
@@ -37,6 +38,9 @@ public class TableAgent extends Agent {
     int nmov;
     int vacantes;
     
+    /**
+     * Describe aqui picha
+     */
     @Override
     protected void setup(){
         //Inicialización de los atributos de clase
@@ -88,11 +92,27 @@ public class TableAgent extends Agent {
         }
     }
     
+    /**
+     * Describe aqui picha
+     */
     private class PlayerResponder extends AchieveREResponder{
+        
+        /**
+         * Describe aqui picha
+         * 
+         * @param agent
+         * @param mt 
+         */
         public PlayerResponder(Agent agent, MessageTemplate mt){
             super(agent,mt);
         }
         
+        /**
+         * Describe aqui picha
+         * 
+         * @param request
+         * @return 
+         */
         @Override
         protected ACLMessage handleRequest (ACLMessage request){
             ACLMessage agree = request.createReply();
@@ -100,6 +120,13 @@ public class TableAgent extends Agent {
             return agree;
         }
         
+        /**
+         * Describe aqui picha
+         * 
+         * @param request
+         * @param response
+         * @return 
+         */
         @Override
         protected ACLMessage prepareResultNotification(ACLMessage request, ACLMessage response){
             
@@ -119,11 +146,26 @@ public class TableAgent extends Agent {
         }
     }
     
-    private class CreateGame extends ProposeInitiator{        
+    /**
+     * Describe aqui picha
+     */
+    private class CreateGame extends ProposeInitiator{
+        
+        /**
+         * Describe aqui picha
+         * 
+         * @param a 
+         * @param message 
+         */
         CreateGame(Agent a, ACLMessage message){
             super(a,message);
         }
         
+        /**
+         * Describe aqui picha
+         * 
+         * @param responses 
+         */
         @Override
         protected void handleAllResponses(java.util.Vector responses){
             if(responses.size()<=1) {
@@ -132,9 +174,14 @@ public class TableAgent extends Agent {
             }
             System.out.println("allresponses vacantes: "+vacantes);            
         }
-                
+        
+        /**
+         * Método que maneja los mensajes de aceptación
+         * 
+         * @param accepted Mensaje de aceptación
+         */
         @Override
-        protected void handleAcceptProposal(ACLMessage accepted) {
+        protected void handleAcceptProposal(ACLMessage accepted){
             if(vacantes == 2){
                 jugadores[0] = accepted.getSender();
                 vacantes--;
@@ -152,27 +199,57 @@ public class TableAgent extends Agent {
         }
     }
     
+    /**
+     * Describe aqui picha
+     */
     class MoveRequest extends AchieveREInitiator{
+        
+        /**
+         * Describe aqui picha
+         * 
+         * @param a
+         * @param msg 
+         */
         MoveRequest(Agent a, ACLMessage msg){
             super(a,msg);
         }
 
+        /**
+         * Manejador de mensajes de rechazo.
+         * Cuando un jugador rechaza el mensaje se considera que se ha rendido
+         * 
+         * @param agree Mensaje de rechazo
+         */
         @Override
-        protected void handleRefuse(ACLMessage agree)
-          {
+        protected void handleRefuse(ACLMessage agree){
               finish = true;
               myGUI.popPupMessage(jugadores[(player+1)%2]+" surrenders!");
           }
 
+        /**
+         * Manejador que se lanza cuando todas las respuestas se han recibido o 
+         * cuando ha expirado el quantum de tiempo. 
+         * En caso de no recibirse ninguna respuesta dentro del quantum, se da 
+         * la partida por ganada al jugador contrario
+         * 
+         * @param responses Vector con las respuestas
+         */
         @Override
         protected void handleAllResponses(java.util.Vector responses){
-
             if(responses.isEmpty()){
                finish = true;
                myGUI.popPupMessage(jugadores[(player+1)%2]+" wins!");
             }
         }
 
+        /**
+         * Manejador de mensajes inform.
+         * En este método, el tablero controla la partida. Mientras la partida
+         * no esté acabada solicita movimientos a los jugadores. Cuando acaba
+         * la partida llamará a un método de la interfaz para representarla
+         * 
+         * @param msg Mensaje inform recibido
+         */
         @Override
         protected void handleInform(ACLMessage msg){
             boolean empate=false;

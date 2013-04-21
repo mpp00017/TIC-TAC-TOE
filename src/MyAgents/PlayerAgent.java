@@ -15,8 +15,6 @@ import jade.lang.acl.MessageTemplate;
 import jade.proto.AchieveREInitiator;
 import jade.proto.AchieveREResponder;
 import jade.proto.ProposeResponder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Agente jugador de Tic-Tac-Toe
@@ -31,9 +29,11 @@ public class PlayerAgent extends Agent {
     String movement;
     int mov;
     
+    /**
+     * Describe aqui picha
+     */
     @Override
     protected void setup(){
-        
         System.out.println("Player Agent: "+this.getLocalName()+" is running.");
         //Register the player service in the yellow pages
         DFAgentDescription dfd = new DFAgentDescription();
@@ -46,8 +46,6 @@ public class PlayerAgent extends Agent {
             DFService.register(this,dfd);
         }catch(FIPAException fe){}
         
-        //this.addBehaviour(new WaitingOffer());
-        
         //Creamos la plantilla a emplear, para solo recibir mensajes con el protocolo FIPA_PROPOSE y la performativa PROPOSE
         MessageTemplate template = ProposeResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_PROPOSE);
         
@@ -55,16 +53,30 @@ public class PlayerAgent extends Agent {
         MessageTemplate performativa = MessageTemplate.MatchPerformative(ACLMessage.REQUEST);
         MessageTemplate plantilla = MessageTemplate.and(protocolo, performativa);
  
-        //Añadimos el comportamiento "responderSalirClase()"
         this.addBehaviour(new ResponderOffer(this, template));
     }
     
+    /**
+     * Describe aqui picha
+     */
     private class ResponderOffer extends ProposeResponder{
 
+        /**
+         * Describe aqui picha 
+         * 
+         * @param a Agente... lo que tu veas y así todos los atributos
+         * @param template 
+         */
         private ResponderOffer(Agent a, MessageTemplate template) {
             super(a,template);
         }
         
+         /**
+          * Describe aqui picha
+          * 
+          * @param proposal
+          * @return 
+          */
         @Override
         protected ACLMessage prepareResponse(ACLMessage proposal){
             ACLMessage answer = proposal.createReply();
@@ -76,11 +88,6 @@ public class PlayerAgent extends Agent {
                 msg.setProtocol(FIPANames.InteractionProtocol.FIPA_QUERY);
                 msg.setContent("Am I playing?");
                 msg.addReceiver(proposal.getSender());
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(PlayerAgent.class.getName()).log(Level.SEVERE, null, ex);
-                }
                 
                 myAgent.addBehaviour(new AmIPlaying(myAgent, msg));
             }
@@ -88,12 +95,27 @@ public class PlayerAgent extends Agent {
         }
     }
     
+    /**
+     * Clase que se encarga de comprobar si un agente está jugando
+     */
     private class AmIPlaying extends AchieveREInitiator{
-        
+        /**
+         * Describe aqui picha
+         * 
+         * @param agent
+         * @param msg 
+         */
         public AmIPlaying(Agent agent, ACLMessage msg){
             super(agent,msg);
         }
         
+       /**
+        * Manejador de mensajes inform.
+        * En este método, el jugador recibe el mensaje en el que se le indica si
+        * va a jugar o no la partida.
+        * 
+        * @param inform Mensaje recibido
+        */
         @Override
         protected void handleInform(ACLMessage inform){
             switch (inform.getContent()) {
@@ -112,12 +134,27 @@ public class PlayerAgent extends Agent {
         }
     }
     
+    /**
+     * Clase que se encarga de enviar movimientos al tablero
+     */
     private class SendMovement extends AchieveREResponder{
         
+        /**
+         * Constructor de la clase SendMovement
+         * 
+         * @param a Agente que va a enviar el movimiento
+         * @param template Mensaje plantilla
+         */
         public SendMovement(Agent a, MessageTemplate template ){
             super(a,template);
         }
         
+        /**
+         * Describe aqui picha
+         * 
+         * @param request
+         * @return Explica lo que devuelve tambien en los return
+         */
         @Override
         protected ACLMessage handleRequest(ACLMessage request){
             
@@ -127,9 +164,15 @@ public class PlayerAgent extends Agent {
             return agree;
         }
         
+        /**
+         * Describe aqui picha
+         * 
+         * @param request
+         * @param response
+         * @return 
+         */
         @Override
         protected ACLMessage prepareResultNotification(ACLMessage request,ACLMessage response){
-            
             ACLMessage inform = request.createReply();
             inform.setPerformative(ACLMessage.INFORM);
             
@@ -226,6 +269,12 @@ public class PlayerAgent extends Agent {
             return inform;           
         }
         
+        /**
+         * Metodo que genera el siguiente movimiento a realizar por el jugador.
+         * La generación es de forma aleatoria entre las casillas libres.
+         * 
+         * @return Casilla a la que se debe realizar el siguiente movimiento.
+         */
         private int generateMov() {
             boolean found = false;
             int move;

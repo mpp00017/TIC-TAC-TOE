@@ -10,7 +10,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 /**
- *
+ * Clase que construlle un JPanel al que se le puede añadir un fondo
+ * 
  * @author Juan Cazalla Estrella, Manuel Pancorbo Pestaña
  */
 public class JPanelConFondo extends JPanel {
