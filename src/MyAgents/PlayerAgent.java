@@ -19,8 +19,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Agente jugador de Tic-Tac-Toe
  *
- * @author Manuel
+ * @author Manuel Pancorbo Pestaña, Juan Cazalla Estrella
  */
 public class PlayerAgent extends Agent {
     
@@ -71,10 +72,6 @@ public class PlayerAgent extends Agent {
                 answer.setPerformative(ACLMessage.REJECT_PROPOSAL);
             else{
                 answer.setPerformative((ACLMessage.ACCEPT_PROPOSAL));
-//                playing = true;
-//                MessageTemplate mt;
-//                mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
-//                myAgent.addBehaviour(new SendMovement(myAgent, mt));
                 ACLMessage msg = new ACLMessage(ACLMessage.QUERY_IF);
                 msg.setProtocol(FIPANames.InteractionProtocol.FIPA_QUERY);
                 msg.setContent("Am I playing?");
@@ -144,10 +141,10 @@ public class PlayerAgent extends Agent {
                 if("Empate".equals(request.getContent())) inform.setContent("Draw!");
                 else inform.setContent("Congratulations!");
                 
-            }else if(request.getContent().length()<=1){ 
+            }else if(request.getContent().length()<=1){
                 if(!"".equals(request.getContent())){
-                movement = request.getContent();
-                switch(movement){
+                    movement = request.getContent();
+                    switch(movement){
                     case "1":
                         table[0][0]=2;
                         break;
@@ -178,47 +175,47 @@ public class PlayerAgent extends Agent {
                     }
                 }
             
-            
                 mov = generateMov();
                 inform.setContent(String.valueOf(mov));
-                
+
                 if(table[0][0]==1){
                     if(table[0][1]==1)
                         if(table[0][2]==1)
                             inform.setContent(String.valueOf(mov) + "123");
-                        
+
                     if(table[1][0]==1)
                         if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "147");
-                        
+
                     if(table[1][1]==1)
                         if(table[2][2]==1)
                             inform.setContent(String.valueOf(mov) + "159");
                 }
-                
+
                 if (table[1][1]==1){
                     if(table[0][1]==1)
                         if(table[2][1]==1)
                             inform.setContent(String.valueOf(mov) + "258");
-                        
+
                     if(table[1][0]==1)
                         if(table[1][2]==1) 
                             inform.setContent(String.valueOf(mov) + "456");
-                    
+
                     if(table[0][2]==1)
                         if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "357");
                 }
+                
                 if (table[2][2]==1){
                     if(table[2][1]==1)
                         if(table[2][0]==1)
                             inform.setContent(String.valueOf(mov) + "789");
-                        
+
                     if(table[1][2]==1)
                         if(table[0][2]==1)
                             inform.setContent(String.valueOf(mov) + "369");
                 }
-                
+
                 if (inform.getContent().length()==4) {
                     playing = false;
                     for(int i=0; i<3; i++)

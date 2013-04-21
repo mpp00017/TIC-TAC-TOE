@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author juan
+ * @author Juan Cazalla Estrella, Manuel Pancorbo Pestaña
  */
 public class JPanelConFondo extends JPanel {
  

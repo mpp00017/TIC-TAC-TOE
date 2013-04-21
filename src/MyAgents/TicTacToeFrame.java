@@ -9,7 +9,7 @@ import java.awt.event.WindowEvent;
 
 /**
  *
- * @author juan
+ * @author Juan Cazalla Estrella, Manuel Pancorbo Pestaña
  */
 public final class TicTacToeFrame extends javax.swing.JFrame {
 

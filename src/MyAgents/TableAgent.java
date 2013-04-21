@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Manuel
+ * @author Manuel Pancorbo Pestaña, Juan Cazalla Estrella
  */
 public class TableAgent extends Agent {
     AID playerAgents[];
