@@ -625,7 +625,6 @@ public final class TicTacToeFrame extends javax.swing.JFrame {
      * @throws InterruptedException 
      */
     void setInterface(String[] movimientos, String[] movVictoria, int ganador, String poppup,int nmov,String jugador1, String jugador2) throws InterruptedException {
-        System.out.println("Numero de movimientos "+nmov);
         for(int i=0; i<nmov;i++){
             Thread.sleep(700);
             if(i%2==0) {

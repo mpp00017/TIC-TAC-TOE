@@ -57,6 +57,13 @@ public class PlayerAgent extends Agent {
     }
     
     /**
+     * Método que se llama al destruir el agente. 
+     */
+    protected void takeDown(){
+        System.out.println(this.getLocalName() + ": Dejo de jugar, hasta otra!");
+    }
+    
+    /**
      * Describe aqui picha
      */
     private class ResponderOffer extends ProposeResponder{
@@ -120,14 +127,14 @@ public class PlayerAgent extends Agent {
         protected void handleInform(ACLMessage inform){
             switch (inform.getContent()) {
                 case "YES":
-                    System.out.println(myAgent.getLocalName()+": Que voy a jugar!! :D");
+                    System.out.println(myAgent.getLocalName()+": He sido seleccionado para jugar la partida!");
                     playing = true;
                     MessageTemplate mt;
                     mt = AchieveREResponder.createMessageTemplate(FIPANames.InteractionProtocol.FIPA_REQUEST);
                     myAgent.addBehaviour(new SendMovement(myAgent, mt));
                     break;
                 case "NO":
-                    System.out.println(myAgent.getLocalName()+": Pues resulta de que no voy a jugar.");
+                    System.out.println(myAgent.getLocalName()+": No he sido seleccionado para esta partida");
                     playing = false;
                     break;
             }

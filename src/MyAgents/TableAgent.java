@@ -71,6 +71,8 @@ public class TableAgent extends Agent {
         myGUI = new TicTacToeFrame(this);
         
         if(playerAgents.length>=2){
+            System.out.println(this.getLocalName() + ": COMIENZA LA PARTIDA!");
+            
             myGUI.setVisible(true);
             
             ACLMessage msg = new ACLMessage(ACLMessage.PROPOSE);
@@ -132,16 +134,12 @@ public class TableAgent extends Agent {
             
             ACLMessage inform = request.createReply();
             inform.setPerformative(ACLMessage.INFORM);
-            System.out.println("PRUEBA");
-            System.out.println(request.getSender());
-            System.out.println(jugadores[1]);
             
             if(request.getSender().compareTo(jugadores[0])==0 || request.getSender().compareTo(jugadores[1])==0)
                 inform.setContent("YES");
             else
                 inform.setContent("NO");
-                
-            System.out.println(inform.getContent());
+            
             return inform;
         }
     }
@@ -171,8 +169,7 @@ public class TableAgent extends Agent {
             if(responses.size()<=1) {
                 jugadores = new AID[2];
                 vacantes = 2;
-            }
-            System.out.println("allresponses vacantes: "+vacantes);            
+            }         
         }
         
         /**
